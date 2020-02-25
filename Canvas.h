@@ -12,7 +12,8 @@ public :
     Canvas(MainWindow *p); //p is the value of p while *p is the value stored in the memory location pointed by p.
     void drawRectangle();
     void drawTemporaryRectangle();
-
+    void drawPolygon();
+    void drawTemporaryPolygon();
 
     void printCoordinates();
 
