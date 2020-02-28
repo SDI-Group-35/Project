@@ -83,11 +83,15 @@ bool MainWindow::getPolygonEnable()
 void MainWindow::slotRectangle()
 {
     rectangleEnable = 1;
+    polygonEnable = 0;
 }
 
 void MainWindow::slotPolygon()
 {
     polygonEnable = 1;
+    rectangleEnable = 0;
+
+
 }
 
 

@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QtWidgets>
-
+#include <QPainter>
 
 class MainWindow : public QMainWindow
 {

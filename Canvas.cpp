@@ -44,6 +44,7 @@ void Canvas::mouseMoveEvent(QMouseEvent *event)
 
 //mousePressEvent is called when a mouse button is pressed while the mouse cursor is inside the widget,
 void Canvas::mousePressEvent(QMouseEvent* event){
+
     if(parent->getRectangleEnable())
     {
         //pos() returns the position of the mouse cursor
@@ -56,17 +57,52 @@ void Canvas::mousePressEvent(QMouseEvent* event){
 
     if(parent->getPolygonEnable())
     {
-        //pos() returns the position of the mouse cursor
-        //x() Returns the x position of the mouse cursor
-        xPress = event->pos().x();
-        //pos() returns the position of the mouse cursor
-        //y() Returns the y position of the mouse cursor
-        yPress = event->pos().y();
+        if (firstPx == 0 || firstPy == 0){
+            cout <<"first" << endl;
+            firstPx = event->pos().x();
+            firstPy = event->pos().y();
+            startPx = event->pos().x();
+            startPy = event->pos().y();
+        }
+        else if (secondPx == 0 || secondPy == 0){
+            cout <<"second" << endl;
+            secondPx = event->pos().x();
+            secondPy = event->pos().y();
+            drawPolygon();
+        }
 
-        //Call Function
-        //drawTemporaryPolygon();
-        drawPolygon();
     }
+}
+
+void Canvas::mouseDoubleClickEvent(QMouseEvent *event)
+{
+
+    QPen pen;
+
+    pixmapList.push_back(new QPixmap(xMax,yMax));
+
+    pixCurrent = pixCurrent+1;
+    pixmapList[pixCurrent]->operator =(*pixmapList[pixCurrent-1]);
+    painter->end();
+    delete painter;
+
+    painter = new QPainter(pixmapList[pixCurrent]);
+
+    QPoint startpoint(startPx,startPy);
+    QPoint endpoint(firstPx,firstPy);
+
+    painter->setPen(pen);
+    painter->drawLine(startpoint,endpoint);
+    label->setPixmap(*pixmapList[pixCurrent]);
+
+    xCoordinates = 0;
+    yCoordinates = 0;
+    firstPx = 0;
+    firstPy = 0;
+    secondPx = 0;
+    secondPy = 0;
+    startPx = 0;
+    startPy = 0;
 }
 
 //mouseReleaseEvent is called when a mouse button is released.
@@ -111,8 +147,13 @@ void Canvas::drawPolygon(){
     painter = new QPainter(pixmapList[pixCurrent]);
 
     painter->setPen(pen);
-    painter->drawLine(xRelease,yRelease,xPress,yPress);
+    painter->drawLine(firstPx,firstPy,secondPx,secondPy);
     label->setPixmap(*pixmapList[pixCurrent]);
+
+    firstPx = secondPx;
+    firstPy = secondPy;
+    secondPx = 0;
+    secondPy = 0;
 
 }
 //void Canvas::drawTemporaryPolygon(){
