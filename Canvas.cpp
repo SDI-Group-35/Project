@@ -2,7 +2,6 @@
 using namespace std;
 
 #include <Canvas.h>
-#include "windowsize.h"
 
 //initialization the canvas
 Canvas::Canvas(MainWindow *p) : QWidget()
@@ -24,9 +23,8 @@ Canvas::Canvas(MainWindow *p) : QWidget()
 
     //loads the canvas, setPixmap this property holds the label's pixmap
     label->setPixmap(*pixmapList[pixCurrent]);
+
 }
-
-
 
 //EventMouseEvent is called whenever the mouse moves while a mouse button is held down.
 void Canvas::mouseMoveEvent(QMouseEvent *event)
@@ -45,8 +43,8 @@ void Canvas::mouseMoveEvent(QMouseEvent *event)
 }
 
 //mousePressEvent is called when a mouse button is pressed while the mouse cursor is inside the widget,
-void Canvas::mousePressEvent(QMouseEvent* event)
-{
+void Canvas::mousePressEvent(QMouseEvent* event){
+
     if(parent->getRectangleEnable())
     {
         //pos() returns the position of the mouse cursor
@@ -55,8 +53,56 @@ void Canvas::mousePressEvent(QMouseEvent* event)
         //pos() returns the position of the mouse cursor
         //y() Returns the y position of the mouse cursor
         yPress = event->pos().y();
+    }
+
+    if(parent->getPolygonEnable())
+    {
+        if (firstPx == 0 || firstPy == 0){
+            cout <<"first" << endl;
+            firstPx = event->pos().x();
+            firstPy = event->pos().y();
+            startPx = event->pos().x();
+            startPy = event->pos().y();
+        }
+        else if (secondPx == 0 || secondPy == 0){
+            cout <<"second" << endl;
+            secondPx = event->pos().x();
+            secondPy = event->pos().y();
+            drawPolygon();
+        }
 
     }
+}
+
+void Canvas::mouseDoubleClickEvent(QMouseEvent *event)
+{
+
+    QPen pen;
+
+    pixmapList.push_back(new QPixmap(xMax,yMax));
+
+    pixCurrent = pixCurrent+1;
+    pixmapList[pixCurrent]->operator =(*pixmapList[pixCurrent-1]);
+    painter->end();
+    delete painter;
+
+    painter = new QPainter(pixmapList[pixCurrent]);
+
+    QPoint startpoint(startPx,startPy);
+    QPoint endpoint(firstPx,firstPy);
+
+    painter->setPen(pen);
+    painter->drawLine(startpoint,endpoint);
+    label->setPixmap(*pixmapList[pixCurrent]);
+
+    xCoordinates = 0;
+    yCoordinates = 0;
+    firstPx = 0;
+    firstPy = 0;
+    secondPx = 0;
+    secondPy = 0;
+    startPx = 0;
+    startPy = 0;
 }
 
 //mouseReleaseEvent is called when a mouse button is released.
@@ -72,9 +118,61 @@ void Canvas::mouseReleaseEvent(QMouseEvent *event)
         yRelease = event->pos().y();
         //Call Function
         drawRectangle();
+    }
 
+    if(parent->getPolygonEnable())
+    {
+        //pos() returns the position of the mouse cursor
+        //x() Returns the x position of the mouse cursor
+        xRelease = event->pos().x();
+        //pos() returns the position of the mouse cursor
+        //y() Returns the y position of the mouse cursor
+        yRelease = event->pos().y();
+        //Call Function
+        //drawPolygon();
     }
 }
+
+void Canvas::drawPolygon(){
+
+    QPen pen;
+
+    pixmapList.push_back(new QPixmap(xMax,yMax));
+
+    pixCurrent = pixCurrent+1;
+    pixmapList[pixCurrent]->operator =(*pixmapList[pixCurrent-1]);
+    painter->end();
+    delete painter;
+
+    painter = new QPainter(pixmapList[pixCurrent]);
+
+    painter->setPen(pen);
+    painter->drawLine(firstPx,firstPy,secondPx,secondPy);
+    label->setPixmap(*pixmapList[pixCurrent]);
+
+    firstPx = secondPx;
+    firstPy = secondPy;
+    secondPx = 0;
+    secondPy = 0;
+
+}
+//void Canvas::drawTemporaryPolygon(){
+//    QPen pen;
+
+//    pixmapList.push_back(new QPixmap(xMax,yMax));
+//    pixCurrent = pixCurrent+1;
+//    pixmapList[pixCurrent]->operator =(*pixmapList[pixCurrent-1]);
+//    painter->end();
+//    delete painter;
+//    painter = new QPainter(pixmapList[pixCurrent]);
+
+//    painter->setPen(pen);
+//    painter->drawLine(xPress,yPress,xRelease,yRelease);
+//    label->setPixmap(*pixmapList[pixCurrent]);
+//    //pixmapList.remove(pixCurrent);
+//    pixCurrent = pixmapList.size()-1;
+//}
+
 //Shape Functions
 void Canvas::drawRectangle()
 {
@@ -99,7 +197,7 @@ void Canvas::drawRectangle()
     //Draws the current rectangle with the current X & Y postions.
     painter->drawRect(xPress,yPress,xRelease-xPress,yRelease-yPress);
     label->setPixmap(*pixmapList[pixCurrent]);
-    //printCoordinates();
+
 }
 void Canvas::drawTemporaryRectangle()
 {
@@ -140,7 +238,18 @@ void Canvas::saveCanvas()
 void Canvas::openCanvas()
 {
     QString file = QFileDialog::getOpenFileName(0,"Open image",QString(),"Images (*.png *.gif *.jpg *.jpeg)");
+    if (QString::compare(file, QString())!=0)
+    {
+        QImage image;
+        bool valid = image.load(file);
+
+        if(valid)
+        {
+         image = image.scaledToWidth(xMax, Qt::SmoothTransformation);
+        }
+    }
     painter->end();
+    //QString file = file.scaleToWidth(OfWidget, Qt,,SmoothTranfation);
     delete painter;
     pixmapList.remove(pixCurrent);
     pixmapList.push_back(new QPixmap(file));
@@ -168,8 +277,7 @@ void Canvas::newCanvas()
 }
 
 //update canvas
-void Canvas::returnCanvas()
-{
+void Canvas::returnCanvas(){
     if(pixCurrent ==0) return;
     pixmapList.remove(pixCurrent);
     pixCurrent = pixmapList.size()-1;

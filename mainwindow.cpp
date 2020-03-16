@@ -2,7 +2,6 @@
 
 #include "mainwindow.h"
 #include "Canvas.h"
-#include "windowsize.h"
 
 MainWindow::MainWindow()
 {
@@ -10,6 +9,7 @@ MainWindow::MainWindow()
 
     //initialization variables
     rectangleEnable = 0;
+    polygonEnable = 0;
 
     //initialization Canvas
     // 'this' pointer points to the current object instance and passes it has a paramater to Canvas in Canvas.cpp
@@ -51,8 +51,11 @@ MainWindow::MainWindow()
 
     QAction *actionRectangle = new QAction("Rectangle",this);
     shapeMenu->addAction(actionRectangle);
+    QAction *actionPolygon = new QAction("Polygon",this);
+    shapeMenu->addAction(actionPolygon);
 
     connect(actionRectangle,SIGNAL(triggered(bool)),this,SLOT(slotRectangle()));
+    connect(actionPolygon,SIGNAL(triggered(bool)),this,SLOT(slotPolygon()));
 
     //Option Menu
     QMenu *optionMenu = menuBar()->addMenu("Tools");
@@ -70,11 +73,25 @@ bool MainWindow::getRectangleEnable()
     return rectangleEnable;
 }
 
+bool MainWindow::getPolygonEnable()
+{
+    return polygonEnable;
+}
+
 //SLOTS
 
 void MainWindow::slotRectangle()
 {
     rectangleEnable = 1;
+    polygonEnable = 0;
+}
+
+void MainWindow::slotPolygon()
+{
+    polygonEnable = 1;
+    rectangleEnable = 0;
+
+
 }
 
 

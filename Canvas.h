@@ -12,13 +12,15 @@ public :
     Canvas(MainWindow *p); //p is the value of p while *p is the value stored in the memory location pointed by p.
     void drawRectangle();
     void drawTemporaryRectangle();
-
+    void drawPolygon();
+    void drawTemporaryPolygon();
 
     void printCoordinates();
 
     void mouseMoveEvent(QMouseEvent* event);
     void mousePressEvent(QMouseEvent* event);
     void mouseReleaseEvent(QMouseEvent* event);
+    void mouseDoubleClickEvent(QMouseEvent *event);
 public slots:
     void newCanvas();
     void saveCanvas();
@@ -32,6 +34,15 @@ private :
     int yPress;
     int xRelease;
     int yRelease;
+
+    int xCoordinates;
+    int yCoordinates;
+    int firstPx;
+    int firstPy;
+    int secondPx;
+    int secondPy;
+    int startPx;
+    int startPy;
 
     int pixCurrent;
     int xMax;

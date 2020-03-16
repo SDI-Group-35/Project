@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QtWidgets>
-
+#include <QPainter>
 
 class MainWindow : public QMainWindow
 {
@@ -13,14 +13,17 @@ class MainWindow : public QMainWindow
 public:
     MainWindow();
     bool getRectangleEnable();
+    bool getPolygonEnable();
 
 
 public slots :
     void slotRectangle();
+    void slotPolygon();
 
 
 private:
     bool rectangleEnable;
+    bool polygonEnable;
 
 };
 
