@@ -16,13 +16,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    drawingWidget.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    pixelmap.cpp \
+    polygondraw.cpp
 
 HEADERS += \
-    drawingWidget.h \
-    mainwindow.h
+    mainwindow.h \
+    pixelmap.h \
+    polygondraw.h
 
 FORMS += \
     mainwindow.ui

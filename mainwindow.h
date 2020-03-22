@@ -1,18 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-
-#include <QList>
 #include <QMainWindow>
-#include <QImage>
-#include <QFileDialog>
-#include <QPainter>
-#include <QGraphicsItem>
-#include <QtGui>
+#include "pixelmap.h"
+#include <QGraphicsScene>
+#include <QGraphicsView>
 #include <QMouseEvent>
-#include <QtWidgets>
 
-
+extern int draw;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -26,57 +21,27 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    int drawing = 0;
 
-
-protected:
-
+public slots:
+    void drawLines(const QPointF &firstP , const QPointF &secondP);
+    void drawPolygon(const QPolygonF &polygon);
 
 private slots:
-
-
-
-
+    void on_actionLoad_triggered();
 
     void on_radioButton_clicked();
-
-    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;
 
-    void createActions();
-    void createMenus();
+    pixelmap * pmap;
 
-    bool maybeSave();
+    //library for image/shapes
+    QGraphicsScene * scene;
 
-    bool saveFile(const QByteArray &fileFormat);
+    //Able to draw lines
+    QPen pen;
 
-
-    QMenu *saveAsMenu;
-    QMenu *fileMenu;
-    QMenu *optionMenu;
-    QMenu *helpMenu;
-
-    QAction *openAct;
-
-    QList<QAction *> saveAsActs;
-    QAction *exitAct;
-    QAction *penColorAct;
-    QAction *penWidthAct;
-    QAction *printAct;
-    QAction *clearScreenAct;
-    QAction *aboutAct;
-    QAction *aboutQtAct;
 };
-
-class CustomItem : public QGraphicsRectItem
-{
-protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event)
-    {
-        qDebug() << "Custom item clicked.";
-    }
-};
-
-
 #endif // MAINWINDOW_H
