@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "pixelmap.h"
+#include "polygonDraw.h"
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QMouseEvent>
@@ -26,6 +27,7 @@ public:
 public slots:
     void drawLines(const QPointF &firstP , const QPointF &secondP);
     void drawPolygon(const QPolygonF &polygon);
+    void deletePoly(polygonDraw *);
 
 private slots:
     void on_actionLoad_triggered();
@@ -34,7 +36,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-
+     polygonDraw *pointer;
     pixelmap * pmap;
 
     //library for image/shapes

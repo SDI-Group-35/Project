@@ -18,12 +18,14 @@ public:
 
     //loading image
     void loadImg(QGraphicsScene *scene);
+    void ShowContextMenu(const QPoint &pos);
 
     void clearVectors();
 
     QVector <QGraphicsLineItem*> lineV;
 
     int sides = 0;
+    int setContextMenuPolicy;
 
 signals:
     //drawing first point to second piont
