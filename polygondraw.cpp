@@ -10,7 +10,7 @@ polygonDraw::polygonDraw(QPolygonF polygon, QObject *parent):QGraphicsPolygonIte
     contextMenu.addAction("Delete", this, SLOT(deletePolygon()));
 
     //connect(this, SIGNAL(dulicatePoly(QPolygonF)), parent, SLOT(polygonDraw(QPolygonF)));
-    connect(this, SIGNAL(deletePoly(polygonDraw *)), parent , SLOT(deletePoly(polygonDraw *)));
+    connect(this, SIGNAL(removePolygon(polygonDraw *)), parent , SLOT(removePolygon(polygonDraw *)));
 
 }
 
@@ -24,7 +24,7 @@ void polygonDraw::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void polygonDraw::deletePolygon()
 {
-    emit deletePoly(this);
+    emit removePolygon(this);
 }
 
 void polygonDraw::copyPolygon()

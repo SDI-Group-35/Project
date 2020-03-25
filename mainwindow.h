@@ -27,7 +27,7 @@ public:
 public slots:
     void drawLines(const QPointF &firstP , const QPointF &secondP);
     void drawPolygon(const QPolygonF &polygon);
-    void deletePoly(polygonDraw *);
+    void removePolygon(polygonDraw *Dpoly);
 
 private slots:
     void on_actionLoad_triggered();
