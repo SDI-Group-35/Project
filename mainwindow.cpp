@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
     pmap=new pixelmap(this);
     scene = new QGraphicsScene(this);
     ui -> graphicsView -> setScene(scene);
+
+
 }
 
 MainWindow::~MainWindow()
@@ -43,7 +45,7 @@ void MainWindow:: drawLines(const QPointF &firstP , const QPointF &secondP)
 void MainWindow:: drawPolygon(const QPolygonF &polygon)
 {
 
-    polygonDraw *pointer = new polygonDraw(polygon, this);
+    pointer = new polygonDraw(polygon, this);
 
     pointer -> setPen(pen);
 
@@ -54,12 +56,15 @@ void MainWindow:: drawPolygon(const QPolygonF &polygon)
         delete line;
     }
 
-    pointer -> setFlag(QGraphicsItem::ItemIsMovable);
 }
 
-
+void MainWindow::deletePoly(polygonDraw *)
+{
+    delete pointer;
+}
 
 void MainWindow::on_radioButton_clicked()
 {
     pmap -> sides = 1;
 }
+
