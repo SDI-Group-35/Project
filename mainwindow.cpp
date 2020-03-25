@@ -56,11 +56,12 @@ void MainWindow:: drawPolygon(const QPolygonF &polygon)
         delete line;
     }
 
+    pointer ->setFlag(QGraphicsItem::ItemIsMovable);
 }
 
-void MainWindow::deletePoly(polygonDraw *)
+void MainWindow::removePolygon(polygonDraw *Dpoly)
 {
-    delete pointer;
+    scene->removeItem(Dpoly);
 }
 
 void MainWindow::on_radioButton_clicked()

@@ -20,13 +20,12 @@ public:
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 private slots:
-    //void movePolygon();
     void copyPolygon();
     void deletePolygon();
 
 signals:
     void dulicatePoly(QPolygonF);
-    void deletePoly(polygonDraw *);
+    void removePolygon(polygonDraw *);
 
 private:
     QMenu contextMenu;
