@@ -63,3 +63,8 @@ void MainWindow::on_radioButton_clicked()
 {
     pmap -> sides = 1;
 }
+
+void MainWindow::on_pushButton_clicked()
+{
+
+}
