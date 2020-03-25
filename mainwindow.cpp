@@ -68,4 +68,3 @@ void MainWindow::on_radioButton_clicked()
 {
     pmap -> sides = 1;
 }
-
