@@ -28,13 +28,15 @@ public slots:
     void drawLines(const QPointF &firstP , const QPointF &secondP);
     void drawPolygon(const QPolygonF &polygon);
     void removePolygon(polygonDraw *Dpoly);
+    void on_classAddButton_clicked();
+    void on_classDelete_clicked();
 
 private slots:
     void on_actionLoad_triggered();
 
     void on_radioButton_clicked();
 
-    void on_pushButton_clicked();
+
 
 private:
     Ui::MainWindow *ui;

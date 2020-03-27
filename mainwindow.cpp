@@ -16,12 +16,25 @@ MainWindow::MainWindow(QWidget *parent)
     scene = new QGraphicsScene(this);
     ui -> graphicsView -> setScene(scene);
 
-
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_classDelete_clicked()
+{
+    delete ui -> classList -> currentItem();
+}
+
+void MainWindow::on_classAddButton_clicked()
+{
+    QString classNameField;
+    classNameField = ui->classNameField->text();
+    if(classNameField.isEmpty())
+        return;
+    ui -> classList -> addItem(classNameField);
 }
 
 //when load image button is clicked

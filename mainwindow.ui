@@ -83,61 +83,68 @@
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>20</x>
       <y>270</y>
-      <width>281</width>
-      <height>281</height>
+      <width>276</width>
+      <height>312</height>
      </rect>
     </property>
     <property name="title">
      <string>Classes</string>
     </property>
-    <widget class="QSplitter" name="splitter_2">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>256</width>
-       <height>246</height>
-      </rect>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <widget class="QTableWidget" name="tableWidget_2"/>
-     <widget class="QWidget" name="">
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QPushButton" name="pushButton_2">
-         <property name="text">
-          <string>Add a Class</string>
-         </property>
-        </widget>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QSplitter" name="splitter_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Name:</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="classNameField"/>
+       <widget class="QPushButton" name="classAddButton">
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item>
+      <widget class="QListWidget" name="classList">
+       <item>
+        <property name="text">
+         <string>asd</string>
+        </property>
        </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="pushButton_3">
-         <property name="text">
-          <string>Delete Class</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="pushButton_7">
-         <property name="text">
-          <string>Save Class file</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QPushButton" name="pushButton_4">
-         <property name="text">
-          <string>Load Class file</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="classDelete">
+       <property name="text">
+        <string>Delete Class</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSplitter" name="splitter_7">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <widget class="QPushButton" name="pushButton_7">
+        <property name="text">
+         <string>Save Classes to file</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_4">
+        <property name="text">
+         <string>Load Class from file</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+    </layout>
    </widget>
    <widget class="QGroupBox" name="groupBox_3">
     <property name="geometry">
@@ -239,15 +246,13 @@
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
+   <zorder>splitter_3</zorder>
+   <zorder>splitter_5</zorder>
    <zorder>groupBox_4</zorder>
    <zorder>groupBox_3</zorder>
    <zorder>groupBox_2</zorder>
    <zorder>graphicsView</zorder>
    <zorder>radioButton</zorder>
-   <zorder>tableWidget</zorder>
-   <zorder>pushButton</zorder>
-   <zorder>pushButton_5</zorder>
-   <zorder>pushButton_6</zorder>
    <zorder>groupBox</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
