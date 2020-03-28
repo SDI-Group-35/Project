@@ -31,12 +31,25 @@ public slots:
     void on_classAddButton_clicked();
     void on_classDelete_clicked();
 
+   /* Save and Load Classes  start*/
+    void saveToFile();
+    void loadFromFile();
+
+    QPushButton *loadButton;
+    QPushButton *saveButton;
+
+    /* Save and Load Classes end*/
+
+
+
 private slots:
     void on_actionLoad_triggered();
 
     void on_radioButton_clicked();
 
 
+
+    void on_saveFile_clicked();
 
 private:
     Ui::MainWindow *ui;
