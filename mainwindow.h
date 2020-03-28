@@ -66,5 +66,7 @@ private:
     //Able to draw lines
     QPen pen;
 
+    QStringList names;
+
 };
 #endif // MAINWINDOW_H

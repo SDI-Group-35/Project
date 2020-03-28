@@ -3,6 +3,7 @@
 #include "polygonDraw.h"
 #include <iostream>
 #include <QGraphicsLineItem>
+#include <QDebug>
 
 using namespace std;
 
@@ -34,6 +35,8 @@ void MainWindow::on_classAddButton_clicked()
     if(classNameField.isEmpty())
         return;
     ui -> classList -> addItem(classNameField);
+
+    names.append(classNameField);
 }
 
 //when load image button is clicked
@@ -100,5 +103,6 @@ void MainWindow::on_radioButton_clicked()
 
 void MainWindow::on_saveFile_clicked()
 {
-
+    for (int i = 0; i < names.size(); ++i)
+            cout << names.at(i).toLocal8Bit().constData() << endl;
 }
