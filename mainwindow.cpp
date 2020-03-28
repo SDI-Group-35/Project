@@ -28,6 +28,11 @@ void MainWindow::on_classDelete_clicked()
     delete ui -> classList -> currentItem();
 }
 
+void MainWindow::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    ui -> classList -> currentItem();
+    cout << "hello" <<endl;
+}
 
 void MainWindow::on_classAddButton_clicked()
 {
@@ -70,6 +75,8 @@ void MainWindow:: drawPolygon(const QPolygonF &polygon)
     }
 
     pointer ->setFlag(QGraphicsItem::ItemIsMovable);
+
+
 
     //scene->addItem(ClassName);
 

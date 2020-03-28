@@ -20,7 +20,7 @@ polygonDraw::polygonDraw(QPolygonF polygon, QObject *parent):QGraphicsPolygonIte
 
 void polygonDraw:: setClassName(QGraphicsTextItem *){
 
-    ClassName = new QGraphicsTextItem("tree");
+    ClassName = new QGraphicsTextItem("Tree");
 
 }
 
@@ -30,19 +30,21 @@ QGraphicsTextItem *polygonDraw::getClassName()
     return ClassName;
 }
 
-QPointF polygonDraw::getRightPos()
+void polygonDraw::getPolygonPos()
 {
-    QPolygonF poly = this->polygon();
-    QPointF edgePoint(0,0);
-    for(int i = 0; i<poly.size(); i++){
-        if(poly.at(i).x() > edgePoint.x() && poly.at(i).y() > edgePoint.y())
+    QPolygonF newpoly = this->polygon();
+
+    QPointF PolyPoint(0,0);
+    for(int i = 0; i<newpoly.size(); i++){
+
+        if(PolyPoint.x() < newpoly.at(i).x() && PolyPoint.y() < newpoly.at(i).y())
         {
-            edgePoint.setX(poly.at(i).x());
-            edgePoint.setY(poly.at(i).y());
+            PolyPoint.setX(newpoly.at(i).x());
+            PolyPoint.setY(newpoly.at(i).y());
         }
 
     }
-    this->ClassName->setPos(edgePoint);
+    this->ClassName->setPos(PolyPoint);
 }
 
 
@@ -59,12 +61,13 @@ void polygonDraw::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void polygonDraw::deletePolygon()
 {
     emit removePolygon(this);
+    delete ClassName;
 }
 
 void polygonDraw::changeClassTag()
 {
     getClassName();
-    getRightPos();
+    getPolygonPos();
     emit updateClassName(ClassName);
 }
 

@@ -18,7 +18,7 @@ public:
     polygonDraw(QPolygonF polygon, QObject *parent);
     void setClassName(QGraphicsTextItem *value);
     QGraphicsTextItem *getClassName();
-    QPointF getRightPos();
+    void getPolygonPos();
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);

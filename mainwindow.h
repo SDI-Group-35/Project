@@ -31,6 +31,14 @@ public slots:
     void on_classAddButton_clicked();
     void on_classDelete_clicked();
 
+
+protected:
+
+    void mousePressEvent(QGraphicsSceneMouseEvent* event);
+
+protected:
+
+
 private slots:
     void on_actionLoad_triggered();
 
