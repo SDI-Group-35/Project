@@ -16,6 +16,8 @@ public:
 
     QGraphicsView *view;
 
+    int polygonSide = 1;
+
     //loading image
     void loadImg(QGraphicsScene *scene);
     void ShowContextMenu(const QPoint &pos);
@@ -24,7 +26,7 @@ public:
 
     QVector <QGraphicsLineItem*> lineV;
 
-    int sides = 0;
+    int PolygonOn = 0;
     int setContextMenuPolicy;
 
 signals:

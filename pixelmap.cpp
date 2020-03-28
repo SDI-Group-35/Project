@@ -11,7 +11,7 @@ pixelmap::pixelmap(QObject *parent)
 }
 
 //loads image
-void pixelmap::loadImg(QGraphicsScene *scene)
+void pixelmap::loadImg(QGraphicsScene *)
 {
     //loads file dialog
     QString filename = QFileDialog::getOpenFileName(nullptr, tr("Choose"), "",tr("Images (*.png *.jpg *.jpeg *.bmp *.gif"));
@@ -31,7 +31,7 @@ void pixelmap::loadImg(QGraphicsScene *scene)
 
 void pixelmap::mousePressEvent(QGraphicsSceneMouseEvent * event){
 
-    if(sides == 1){
+    if(PolygonOn == 1){
 
         //getting postions and updating/storing the coordinates into the vector
         xyPress.push_back(event->pos());
@@ -41,6 +41,9 @@ void pixelmap::mousePressEvent(QGraphicsSceneMouseEvent * event){
         {
             //drawline
             emit drawLines(xyPress.back(), xyPress.at(xyPress.size()-2));
+
+            polygonSide++;
+
         }
     }
 }
@@ -49,18 +52,22 @@ void pixelmap::clearVectors(){
 
     xyPress.clear();
     lineV.clear();
+    polygonSide = 1;
 }
 
 //end drawing
-void pixelmap::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event){
+void pixelmap::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* ){
 
-    if(sides == 1){
+    if(PolygonOn == 1){
         //draws line from first and last point
         emit drawLines(xyPress.back(), xyPress.at(xyPress.size()-2));
+
+        cout << polygonSide << endl;
 
         QPolygonF newPoly(xyPress);
 
         emit drawPolygon(newPoly);
+
 
         clearVectors();
     }
