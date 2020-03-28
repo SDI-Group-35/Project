@@ -31,12 +31,24 @@ public slots:
     void on_classAddButton_clicked();
     void on_classDelete_clicked();
 
+<<<<<<< HEAD
 
 protected:
 
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
 
 protected:
+=======
+   /* Save and Load Classes  start*/
+    void saveToFile();
+    void loadFromFile();
+
+    QPushButton *loadButton;
+    QPushButton *saveButton;
+
+    /* Save and Load Classes end*/
+
+>>>>>>> e9de4a7395be0528997a8caf6c280c06a95df971
 
 
 private slots:
@@ -45,6 +57,8 @@ private slots:
     void on_radioButton_clicked();
 
 
+
+    void on_saveFile_clicked();
 
 private:
     Ui::MainWindow *ui;
