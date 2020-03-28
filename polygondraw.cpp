@@ -9,41 +9,44 @@ polygonDraw::polygonDraw(QPolygonF polygon, QObject *parent):QGraphicsPolygonIte
     setFlag(QGraphicsItem::ItemIsMovable);
     //contextMenu.addAction("Copy", this, SLOT(copyPolygon()));
     contextMenu.addAction("Delete", this, SLOT(deletePolygon()));
-    contextMenu.addAction("Change Tag", this, SLOT(changeClassTag()));
+    contextMenu.addAction("Add Class Tag", this, SLOT(addClassTag()));
 
     //connect(this, SIGNAL(dulicatePoly(QPolygonF)), parent, SLOT(polygonDraw(QPolygonF)));
     connect(this, SIGNAL(removePolygon(polygonDraw *)), parent , SLOT(removePolygon(polygonDraw *)));
     connect(this, SIGNAL(updateClassName(QGraphicsTextItem *)), parent , SLOT(updateClassName(QGraphicsTextItem *)));
-    connect(this, SIGNAL(updateClassName(QGraphicsTextItem *)), parent , SLOT(updateClassName(QGraphicsTextItem *)));
-
 }
 
-void polygonDraw:: setClassName(QGraphicsTextItem *){
+void polygonDraw:: updateClassValue(QGraphicsTextItem *){
 
     ClassName = new QGraphicsTextItem("Tree");
 
 }
 
-QGraphicsTextItem *polygonDraw::getClassName()
+QGraphicsTextItem *polygonDraw::retrieveClassName()
 {
-    setClassName(ClassName);
+    updateClassValue(ClassName);
     return ClassName;
 }
 
 void polygonDraw::getPolygonPos()
 {
-    QPolygonF newpoly = this->polygon();
+    //stores the selected Polygon
+    newPoly = this->polygon();
 
     QPointF PolyPoint(0,0);
-    for(int i = 0; i<newpoly.size(); i++){
 
-        if(PolyPoint.x() < newpoly.at(i).x() && PolyPoint.y() < newpoly.at(i).y())
+    for(int i = 0; i<newPoly.size(); i++){
+
+        //compares the Polygons to find the Postion
+        if(PolyPoint.x() < newPoly.at(i).x() && PolyPoint.y() < newPoly.at(i).y())
         {
-            PolyPoint.setX(newpoly.at(i).x());
-            PolyPoint.setY(newpoly.at(i).y());
+            //set new Position
+            PolyPoint.setX(newPoly.at(i).x());
+            PolyPoint.setY(newPoly.at(i).y());
         }
 
     }
+    //update Position
     this->ClassName->setPos(PolyPoint);
 }
 
@@ -64,9 +67,9 @@ void polygonDraw::deletePolygon()
     delete ClassName;
 }
 
-void polygonDraw::changeClassTag()
+void polygonDraw::addClassTag()
 {
-    getClassName();
+    retrieveClassName();
     getPolygonPos();
     emit updateClassName(ClassName);
 }

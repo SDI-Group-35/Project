@@ -33,10 +33,6 @@ public slots:
 
 protected:
 
-    void mousePressEvent(QGraphicsSceneMouseEvent* event);
-
-protected:
-
    /* Save and Load Classes  start*/
     void saveToFile();
     void loadFromFile();

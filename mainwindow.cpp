@@ -28,12 +28,6 @@ void MainWindow::on_classDelete_clicked()
     delete ui -> classList -> currentItem();
 }
 
-void MainWindow::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    ui -> classList -> currentItem();
-    cout << "hello" <<endl;
-}
-
 void MainWindow::on_classAddButton_clicked()
 {
     classNameField = ui->classNameField->text();

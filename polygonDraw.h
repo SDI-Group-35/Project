@@ -16,9 +16,10 @@ class polygonDraw : public QObject, public QGraphicsPolygonItem
 
 public:
     polygonDraw(QPolygonF polygon, QObject *parent);
-    void setClassName(QGraphicsTextItem *value);
-    QGraphicsTextItem *getClassName();
+    void updateClassValue(QGraphicsTextItem *value);
+    QGraphicsTextItem *retrieveClassName();
     void getPolygonPos();
+
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -26,7 +27,7 @@ protected:
 private slots:
     void copyPolygon();
     void deletePolygon();
-    void changeClassTag();
+    void addClassTag();
 
 signals:
     void dulicatePoly(QPolygonF);
@@ -38,6 +39,9 @@ private:
 
     QGraphicsTextItem *ClassName;
 
+    //Annotation Variable
+    QPolygonF newPoly;
+    QPointF PolyPoint;
 
 
 };
