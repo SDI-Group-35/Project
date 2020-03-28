@@ -28,9 +28,9 @@ void MainWindow::on_classDelete_clicked()
     delete ui -> classList -> currentItem();
 }
 
+
 void MainWindow::on_classAddButton_clicked()
 {
-    QString classNameField;
     classNameField = ui->classNameField->text();
     if(classNameField.isEmpty())
         return;
@@ -70,6 +70,15 @@ void MainWindow:: drawPolygon(const QPolygonF &polygon)
     }
 
     pointer ->setFlag(QGraphicsItem::ItemIsMovable);
+
+    //scene->addItem(ClassName);
+
+//    QGraphicsTextItem *classText = new QGraphicsTextItem("Sam");
+//    scene->addItem(classText);
+//    classText->setPos(200,10);
+
+
+
 }
 
 void MainWindow::removePolygon(polygonDraw *Dpoly)
@@ -77,7 +86,13 @@ void MainWindow::removePolygon(polygonDraw *Dpoly)
     scene->removeItem(Dpoly);
 }
 
+void MainWindow::updateClassName(QGraphicsTextItem *CName)
+{
+    cout << "ClassName:" << CName <<endl;
+    scene->addItem(CName);
+}
+
 void MainWindow::on_radioButton_clicked()
 {
-    pmap -> sides = 1;
+    pmap -> PolygonOn = 1;
 }

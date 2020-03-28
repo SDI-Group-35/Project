@@ -21,13 +21,13 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
-    int drawing = 0;
+    QString classNameField;
 
 public slots:
     void drawLines(const QPointF &firstP , const QPointF &secondP);
     void drawPolygon(const QPolygonF &polygon);
     void removePolygon(polygonDraw *Dpoly);
+    void updateClassName(QGraphicsTextItem *CName);
     void on_classAddButton_clicked();
     void on_classDelete_clicked();
 
@@ -40,7 +40,9 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-     polygonDraw *pointer;
+
+    polygonDraw *pointer;
+
     pixelmap * pmap;
 
     //library for image/shapes
