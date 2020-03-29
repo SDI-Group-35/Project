@@ -135,10 +135,7 @@ void MainWindow::on_saveFile_clicked()
     }
 }
 
-void MainWindow::on_zoomIn_clicked()
-{
 
-}
 void MainWindow::on_pushButton_4_clicked()
 {
     cout << model << endl;
