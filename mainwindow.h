@@ -49,8 +49,6 @@ private slots:
 
     void on_radioButton_clicked();
 
-
-
     void on_saveFile_clicked();
 
     void on_zoomIn_clicked();
