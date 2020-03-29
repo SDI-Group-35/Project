@@ -1,24 +1,29 @@
 #include "polygonDraw.h"
 #include "mainwindow.h"
 
+using namespace std;
+
 polygonDraw::polygonDraw(QPolygonF polygon, QObject *parent):QGraphicsPolygonItem(polygon)
 {
     //QWidget *widget = new QWidget;
 
 
     setFlag(QGraphicsItem::ItemIsMovable);
-    //contextMenu.addAction("Copy", this, SLOT(copyPolygon()));
-    contextMenu.addAction("Delete", this, SLOT(deletePolygon()));
-    contextMenu.addAction("Add Class Tag", this, SLOT(addClassTag()));
 
-    //connect(this, SIGNAL(dulicatePoly(QPolygonF)), parent, SLOT(polygonDraw(QPolygonF)));
+    contextMenu.addAction("Copy", this, SLOT(copyPolygon()));
+    connect(this, SIGNAL(dulicatePoly(QPolygonF)), parent, SLOT(drawPolygon(QPolygonF)));
+
+    contextMenu.addAction("Delete", this, SLOT(deletePolygon()));
     connect(this, SIGNAL(removePolygon(polygonDraw *)), parent , SLOT(removePolygon(polygonDraw *)));
+
+    contextMenu.addAction("Add Class Tag", this, SLOT(addClassTag()));
     connect(this, SIGNAL(updateClassName(QGraphicsTextItem *)), parent , SLOT(updateClassName(QGraphicsTextItem *)));
 }
 
 void polygonDraw:: updateClassValue(QGraphicsTextItem *){
 
-    ClassName = new QGraphicsTextItem("Tree");
+
+    ClassName = new QGraphicsTextItem("Sam");
 
 }
 
@@ -27,6 +32,8 @@ QGraphicsTextItem *polygonDraw::retrieveClassName()
     updateClassValue(ClassName);
     return ClassName;
 }
+
+
 
 void polygonDraw::getPolygonPos()
 {
@@ -48,6 +55,7 @@ void polygonDraw::getPolygonPos()
     }
     //update Position
     this->ClassName->setPos(PolyPoint);
+
 }
 
 
@@ -77,6 +85,23 @@ void polygonDraw::addClassTag()
 void polygonDraw::copyPolygon()
 {
 
+    QVector<QPointF> newPolyPoints;
+    QPointF P;
+    QPolygonF copyPoly = mapToScene(polygon());
+
+    for(int i = 0; i < copyPoly.size(); i++)
+    {
+        P = copyPoly.at(i);
+
+        P.setX(P.x() + 50);
+        P.setY(P.y() + 50);
+
+        newPolyPoints.push_back(P);
+    }
+
+    QPolygonF movedPoly(newPolyPoints);
+
+    emit dulicatePoly(movedPoly);
 }
 
 

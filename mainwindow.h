@@ -57,9 +57,8 @@ private slots:
 
     void on_radioButton_clicked();
 
-
-
     void on_saveFile_clicked();
+
 
     void on_pushButton_4_clicked();
 
@@ -71,7 +70,6 @@ private slots:
 
     void on_pushButton_7_clicked();
     ////////////////////////// NEW CLASS LIST ////////////////////////// MODEL BASED //////////////////////////
-
 
 private:
     Ui::MainWindow *ui;
