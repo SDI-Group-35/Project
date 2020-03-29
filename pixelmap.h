@@ -18,7 +18,7 @@ public:
 
     int polygonSide = 1;
 
-    //loading image
+    /* Loading images */
     void loadImg(QGraphicsScene *scene);
     void ShowContextMenu(const QPoint &pos);
 
@@ -30,7 +30,7 @@ public:
     int setContextMenuPolicy;
 
 signals:
-    //drawing first point to second piont
+    /* drawing first point to second piont */
     void drawLines(QPointF , QPointF);
     void drawPolygon(QPolygonF);
 
@@ -40,7 +40,7 @@ protected:
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
 
 private:
-    //storing coorindates
+    /* storing coorindates */
     QVector<QPointF> xyPress;
 
 };

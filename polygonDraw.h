@@ -39,7 +39,7 @@ private:
 
     QGraphicsTextItem *ClassName;
 
-    //Annotation Variable
+    /* Annotation Variable */
     QPolygonF newPoly;
     QPointF PolyPoint;
 

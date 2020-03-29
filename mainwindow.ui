@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1015</width>
-    <height>896</height>
+    <height>626</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,7 +24,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QRadioButton" name="radioButton">
+   <widget class="QRadioButton" name="polyShape">
     <property name="geometry">
      <rect>
       <x>910</x>
@@ -86,7 +86,7 @@
       <x>10</x>
       <y>270</y>
       <width>276</width>
-      <height>312</height>
+      <height>314</height>
      </rect>
     </property>
     <property name="title">
@@ -122,11 +122,22 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="classDelete">
-       <property name="text">
-        <string>Delete Class</string>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QPushButton" name="classInsert">
+         <property name="text">
+          <string>Insert Class</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="classDelete">
+         <property name="text">
+          <string>Delete Class</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <widget class="QSplitter" name="splitter_7">
@@ -273,62 +284,14 @@
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QWidget" name="">
-    <property name="geometry">
-     <rect>
-      <x>420</x>
-      <y>570</y>
-      <width>258</width>
-      <height>251</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
-      <widget class="QListView" name="listView"/>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QPushButton" name="pushButton_2">
-         <property name="text">
-          <string>Add</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_3">
-         <property name="text">
-          <string>Insert</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_7">
-         <property name="text">
-          <string>Remove</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <widget class="QComboBox" name="comboBox"/>
-     </item>
-    </layout>
-   </widget>
    <zorder>splitter_3</zorder>
    <zorder>splitter_5</zorder>
    <zorder>groupBox_4</zorder>
    <zorder>groupBox_3</zorder>
    <zorder>groupBox_2</zorder>
    <zorder>graphicsView</zorder>
-   <zorder>radioButton</zorder>
+   <zorder>polyShape</zorder>
    <zorder>groupBox</zorder>
-   <zorder>listView</zorder>
-   <zorder>pushButton_2</zorder>
-   <zorder>pushButton_3</zorder>
-   <zorder>pushButton_7</zorder>
-   <zorder>comboBox</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
