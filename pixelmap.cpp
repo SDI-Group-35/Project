@@ -55,6 +55,7 @@ void pixelmap::clearVectors(){
     polygonSide = 1;
 }
 
+
 //end drawing
 void pixelmap::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* ){
 
@@ -72,3 +73,4 @@ void pixelmap::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* ){
         clearVectors();
     }
 }
+

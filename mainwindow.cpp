@@ -71,7 +71,7 @@ void MainWindow:: drawPolygon(const QPolygonF &polygon)
         delete line;
     }
 
-    pointer ->setFlag(QGraphicsItem::ItemIsMovable);
+    //pointer ->setFlag(QGraphicsItem::ItemIsMovable);
 
 
 
@@ -103,6 +103,12 @@ void MainWindow::on_radioButton_clicked()
 
 void MainWindow::on_saveFile_clicked()
 {
-    for (int i = 0; i < names.size(); ++i)
+    for (int i = 0; i < names.size(); ++i){
             cout << names.at(i).toLocal8Bit().constData() << endl;
+    }
+}
+
+void MainWindow::on_zoomIn_clicked()
+{
+
 }

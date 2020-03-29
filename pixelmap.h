@@ -12,7 +12,7 @@ class pixelmap : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
-    pixelmap(QObject *parent);
+    pixelmap(QObject *parent = 0);
 
     QGraphicsView *view;
 
@@ -34,13 +34,11 @@ signals:
     void drawLines(QPointF , QPointF);
     void drawPolygon(QPolygonF);
 
-
-
-
 protected:
 
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
+
 private:
     //storing coorindates
     QVector<QPointF> xyPress;
