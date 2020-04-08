@@ -11,12 +11,11 @@ pixelmap::pixelmap(QObject *parent)
 }
 
 /* loads image */
-void pixelmap::loadImg(QGraphicsScene *)
+void pixelmap::loadImg(QGraphicsScene *scene)
 {
-    /* loads file dialog */
-    QString filename = QFileDialog::getOpenFileName(nullptr, tr("Choose"), "",tr("Images (*.png *.jpg *.jpeg *.bmp *.gif"));
-    //stores image
+
     QImage image(filename);
+
 
     if (true)
     {
@@ -26,6 +25,7 @@ void pixelmap::loadImg(QGraphicsScene *)
         /* update pixmap */
         setPixmap(*p);
     }
+
 }
 
 

@@ -29,6 +29,8 @@ public:
     int PolygonOn = 0;
     int setContextMenuPolicy;
 
+    QString filename;
+
 signals:
     /* drawing first point to second piont */
     void drawLines(QPointF , QPointF);
@@ -42,6 +44,8 @@ protected:
 private:
     /* storing coorindates */
     QVector<QPointF> xyPress;
+
+
 
 };
 #endif // PIXELMAP_H

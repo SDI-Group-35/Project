@@ -12,6 +12,12 @@
 #include <QStringList>
 #include <QStringListModel>
 #include <QAbstractItemView>
+#include <QModelIndex>
+#include <QFileSystemModel>
+#include <QListWidget>
+
+
+#include <QListView>
 
 extern int draw;
 
@@ -56,6 +62,18 @@ private slots:
     void on_polyShape_clicked();
 
 
+    void on_pushButton_clicked();
+
+    void on_ImgList_currentItemChanged(const QModelIndex &index);
+
+    void on_ImgList_itemActivated(QListWidgetItem *item);
+
+    void on_ImgList_itemPressed(QListWidgetItem *item);
+
+    void on_ImgList_itemDoubleClicked(QListWidgetItem *item);
+
+    void on_ImgList_clicked(const QModelIndex &index);
+
 private:
     Ui::MainWindow *ui;
 
@@ -66,12 +84,27 @@ private:
     /* Library for image/shapes */
     QGraphicsScene * scene;
 
+    QGraphicsPixmapItem *image;
+
     /* Able to draw lines */
     QPen pen;
 
     QStringList names;
 
     QStringListModel *model;
+
+    QString currentFolder;
+    QString currentFile;
+
+    QFileSystemModel *dirmodel;
+
+    QFileSystemModel *filemodel;
+
+
+
+
+
+
 
 };
 #endif // MAINWINDOW_H
