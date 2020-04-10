@@ -74,6 +74,20 @@ private slots:
 
     void on_ImgList_clicked(const QModelIndex &index);
 
+    void on_pushButton_4_clicked();
+
+    void on_pushButton_2_clicked();
+
+    void on_listView_clicked(const QModelIndex &index);
+
+    void on_loadClass_clicked();
+
+    void on_pushButton_3_clicked();
+
+    void on_pushButton_7_clicked();
+
+    void on_addClass_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -94,7 +108,7 @@ private:
     QStringListModel *model;
 
     QString currentFolder;
-    QString currentFile;
+    QString currentFile = "";
 
     QFileSystemModel *dirmodel;
 

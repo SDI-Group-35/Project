@@ -4,6 +4,11 @@
 #include <iostream>
 #include <QGraphicsLineItem>
 #include <QDebug>
+#include <QMessageBox>
+#include <QFile>
+#include <QTextStream>
+
+
 
 using namespace std;
 
@@ -22,11 +27,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     QString sPath = "C:/";
 
+    dirmodel = new QFileSystemModel(this);
+        dirmodel -> setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
+        dirmodel -> setRootPath(sPath);
+
     filemodel = new QFileSystemModel(this);
     filemodel -> setFilter(QDir::NoDotAndDotDot | QDir::Files );
     filemodel-> setRootPath(sPath);
 
     ui -> ImgList -> setModel(filemodel);
+
+    ui->classList->setModel(filemodel);
 
 }
 
@@ -35,24 +46,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-/* Adds classes to classList */
-void MainWindow::on_classAddButton_clicked()
-{
-    classNameField = ui->classNameField->text();
-    if(classNameField.isEmpty())
-        return;
-    ui -> classList -> addItem(classNameField);
-
-    names.append(classNameField);
-}
-
-
-/* Delets classes from classList */
-void MainWindow::on_classDelete_clicked()
-{
-    delete ui -> classList -> currentItem();
-}
 
 /* Load image button is clicked */
 void MainWindow::on_actionLoad_triggered()
@@ -185,12 +178,47 @@ void MainWindow::on_ImgList_currentItemChanged(const QModelIndex &index)
 
 void MainWindow::on_ImgList_clicked(const QModelIndex &index)
 {
-    QString sPath = filemodel -> fileInfo(index).path();
-
-    std:: cout << sPath.toStdString();
-
     pmap -> filename = filemodel -> filePath(index);
 
     pmap -> loadImg(scene);
     scene -> addItem(pmap);
+}
+
+void MainWindow::on_loadClass_clicked()
+{
+   QString sPath = QFileDialog::getExistingDirectory(this, tr("Choose catalog"), ".", QFileDialog::ReadOnly);
+   QStringList filter;
+       filter << QLatin1String(".txt");
+
+       filemodel -> setNameFilters(filter);
+
+   ui -> classList -> setRootIndex(filemodel -> setRootPath(sPath));
+}
+
+void MainWindow::on_listView_clicked(const QModelIndex &index)
+{
+//    qInfo() << index<< endl;
+
+   // cout << index<<endl;
+   // QString dpath = dirmodel->fileInfo(index).path();
+  // std::cout<<dpath.toStdString();
+  //  qInfo() << dpath << endl;
+
+ //       currentFile = index.path();
+   //     qInfo() << currentFile << endl;
+
+}
+
+void MainWindow::on_addClass_clicked()
+{
+QString file_name= QFileDialog::getSaveFileName(this,tr("Save Class File"),"..",tr("Text file(*.txt"));
+QFile file(file_name);
+if(!file.open(QFile::WriteOnly | QFile::Text)){
+    QMessageBox::warning(this,"Error!","File was not saved.");
+    return;
+}
+QTextStream out(&file);
+QString text = ui->classNameField->toPlainText();
+out << text;
+file.close();
 }
