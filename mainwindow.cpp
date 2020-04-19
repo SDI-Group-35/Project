@@ -15,6 +15,7 @@ using namespace std;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+
 {
 
 
@@ -101,79 +102,51 @@ void MainWindow::on_polyShape_clicked()
 
 void MainWindow::on_pushButton_clicked()
 {
-//    // browse dialog box to locate images folder, then load folder contents to QDir class
-//    QDir directory(QFileDialog::getExistingDirectory(this, "Open a Folder", QDir::homePath()));
+    // browse dialog box to locate images folder, then load folder contents to QDir class
+    QDir directory(QFileDialog::getExistingDirectory(this, "Open a Folder", QDir::homePath()));
 
-//    // only load filenames with acceptable image postfixes
-//    QStringList images = directory.entryList(QStringList() << "*.jpg" << "*.png" << "*.jpeg", QDir::Files);
+    // only load filenames with acceptable image postfixes
+    QStringList images = directory.entryList(QStringList() << "*.jpg" << "*.png" << "*.jpeg", QDir::Files);
 
-//    // populate listbox with acceptable files
-//    if (images.length() > 0) {
-//        // store path for later
-//        currentFolder = directory.path();
-//        qInfo() << currentFolder << endl;
-//        foreach(QString image, images) {
-//            //ui -> ImgList -> addItem(image);
-//        }
-//    } else
-//    {
-//        // show user error box if no images were found in folder
-//        //QMessageBox::information(this, "ERROR", "No images found in that directory");
-//    }
+    // populate listbox with acceptable files
+    if (images.length() > 0) {
+        // store path for later
+        currentFolder = directory.path();
+        qInfo() << currentFolder << endl;
+        foreach(QString image, images) {
+        ui -> WidgetImgList -> addItem(image);
+        }
+    } else
+    {
+        // show user error box if no images were found in folder
+        //QMessageBox::information(this, "ERROR", "No images found in that directory");
+    }
 
-    QString sPath = QFileDialog::getExistingDirectory(this, tr("Choose catalog"), ".", QFileDialog::ReadOnly);
-    QStringList filter;
-        filter << QLatin1String(".png");
-        filter << QLatin1String(".jpeg");
-        filter << QLatin1String(".jpg");
-        filter << QLatin1String(".gif");
-        filter << QLatin1String("*.raw");
-        filemodel -> setNameFilters(filter);
+//    QString sPath = QFileDialog::getExistingDirectory(this, tr("Choose catalog"), ".", QFileDialog::ReadOnly);
+//    QStringList filter;
+//        filter << QLatin1String(".png");
+//        filter << QLatin1String(".jpeg");
+//        filter << QLatin1String(".jpg");
+//        filter << QLatin1String(".gif");
+//        filter << QLatin1String("*.raw");
+//        filemodel -> setNameFilters(filter);
 
-    ui -> ImgList -> setRootIndex(filemodel -> setRootPath(sPath));
+//    ui -> ImgList -> setRootIndex(filemodel -> setRootPath(sPath));
 
 }
 
 
 
-void MainWindow::on_ImgList_currentItemChanged(const QModelIndex &index)
+void MainWindow::on_WidgetImgList_currentItemChanged(QListWidgetItem *current)
 {
 
-//    scene->removeItem(pmap);
-//    // store filename ready for opening
-//    currentFile = current->text();
-//    qInfo() << currentFile << endl;
+    //scene->removeItem(pmap);
+    // store filename ready for opening
+    currentFile = current->text();
+    fileName = currentFolder + '/' + currentFile;
+    std::cout << fileName.toUtf8().constData() << std::endl;
+    loadImage(fileName);
 
-//    // get the filename
-//    if (currentFile != " "){
-//        QString path = currentFolder + currentFile;
-//        qInfo() << path << " Yess " << endl;
-//        QImage imagePath(path);
-
-//          scene = new QGraphicsScene(this);
-//          pmap = new pixelmap(this);
-
-//          /* load image onto pixmap (canvas) */
-//          QPixmap *p = new QPixmap(QPixmap::fromImage(imagePath));
-
-//          scene -> addItem(pmap);
-
-
-
-
-//    }
-//    else
-//    {
-//        scene->removeItem(pmap);
-//    }
-
-
-//    QString sPath = filemodel -> fileInfo(index).path();
-
-//    pmap -> filename = filemodel -> filePath(index);
-
-//    pmap -> loadImg(scene);
-//    scene -> addItem(pmap);
 }
 
 void MainWindow::on_ImgList_clicked(const QModelIndex &index)
@@ -195,20 +168,6 @@ void MainWindow::on_loadClass_clicked()
    ui -> classList -> setRootIndex(filemodel -> setRootPath(sPath));
 }
 
-void MainWindow::on_listView_clicked(const QModelIndex &index)
-{
-//    qInfo() << index<< endl;
-
-   // cout << index<<endl;
-   // QString dpath = dirmodel->fileInfo(index).path();
-  // std::cout<<dpath.toStdString();
-  //  qInfo() << dpath << endl;
-
- //       currentFile = index.path();
-   //     qInfo() << currentFile << endl;
-
-}
-
 void MainWindow::on_addClass_clicked()
 {
 QString file_name= QFileDialog::getSaveFileName(this,tr("Save Class File"),"..",tr("Text file(*.txt"));
@@ -221,4 +180,17 @@ QTextStream out(&file);
 QString text = ui->classNameField->toPlainText();
 out << text;
 file.close();
+}
+
+void MainWindow::loadImage(QString fileName)
+{
+    QImage image;
+    if(image.load(fileName)){
+        cout <<"hello";
+        scene = new QGraphicsScene;
+        pmap->setPixmap(QPixmap::fromImage(image));
+        scene->addItem(pmap);
+        ui->graphicsView->setScene(scene);
+
+    }
 }

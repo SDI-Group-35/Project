@@ -33,6 +33,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     QString classNameField;
+    QString currentFolder;
+    QString currentFile = "";
+    QString fileName = "";
 
 public slots:
     void drawLines(const QPointF &firstP , const QPointF &secondP);
@@ -64,7 +67,7 @@ private slots:
 
     void on_pushButton_clicked();
 
-    void on_ImgList_currentItemChanged(const QModelIndex &index);
+    void on_WidgetImgList_currentItemChanged(QListWidgetItem *current);
 
     void on_ImgList_itemActivated(QListWidgetItem *item);
 
@@ -88,6 +91,8 @@ private slots:
 
     void on_addClass_clicked();
 
+    void loadImage(QString fileName);
+
 private:
     Ui::MainWindow *ui;
 
@@ -107,8 +112,6 @@ private:
 
     QStringListModel *model;
 
-    QString currentFolder;
-    QString currentFile = "";
 
     QFileSystemModel *dirmodel;
 
