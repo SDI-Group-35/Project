@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1015</width>
-    <height>980</height>
+    <height>623</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -204,7 +204,7 @@
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -240,7 +240,7 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QListView" name="classList"/>
+        <widget class="QListWidget" name="classList"/>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -271,15 +271,7 @@
    <zorder>graphicsView</zorder>
    <zorder>polyShape</zorder>
    <zorder>groupBox</zorder>
-   <zorder>loadClass</zorder>
-   <zorder>classList</zorder>
-   <zorder>classNameField</zorder>
-   <zorder>addClass</zorder>
-   <zorder>label_2</zorder>
-   <zorder>deleteClass</zorder>
-   <zorder></zorder>
-   <zorder>textEdit</zorder>
-   <zorder>plainTextEdit</zorder>
+   <zorder>layoutWidget</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

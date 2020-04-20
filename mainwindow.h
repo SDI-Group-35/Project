@@ -17,6 +17,7 @@
 #include <QAbstractItemView>
 #include <QModelIndex>
 #include <QListWidget>
+#include <QVector>
 
 
 #include <QListView>
@@ -90,6 +91,8 @@ private slots:
 
     void on_addClass_clicked();
 
+    void on_classList_indexesMoved(const QModelIndexList &indexes);
+
 private:
     Ui::MainWindow *ui;
 
@@ -117,10 +120,9 @@ private:
 
     QFileSystemModel *filemodel;
 
+    QString classFile;
 
-
-
-
+    QString classNameFile;
 
 
 };
