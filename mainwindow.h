@@ -9,12 +9,15 @@
 #include <QMouseEvent>
 
 #include <QDialog>
+#include <QFile>
+#include <QFileSystemModel>
+#include <QTextStream>
 #include <QStringList>
 #include <QStringListModel>
 #include <QAbstractItemView>
 #include <QModelIndex>
-#include <QFileSystemModel>
 #include <QListWidget>
+#include <QVector>
 
 
 #include <QListView>
@@ -117,10 +120,9 @@ private:
 
     QFileSystemModel *filemodel;
 
+    QString classFile;
 
-
-
-
+    QString classNameFile;
 
 
 };

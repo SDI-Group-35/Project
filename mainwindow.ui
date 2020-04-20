@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1015</width>
-    <height>980</height>
+    <height>623</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -250,7 +250,7 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QListView" name="classList"/>
+        <widget class="QListWidget" name="classList"/>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">

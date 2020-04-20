@@ -7,7 +7,9 @@
 #include <QMessageBox>
 #include <QFile>
 #include <QTextStream>
-
+#include <QString>
+#include <QLabel>
+#include <QVector>
 
 
 using namespace std;
@@ -29,8 +31,9 @@ MainWindow::MainWindow(QWidget *parent)
     QString sPath = "C:/";
 
     dirmodel = new QFileSystemModel(this);
-        dirmodel -> setFilter(QDir::NoDotAndDotDot | QDir::AllDirs);
-        dirmodel -> setRootPath(sPath);
+    dirmodel -> setFilter(QDir::NoDotAndDotDot | QDir::Files);
+    dirmodel -> setRootPath(sPath);
+
 
     filemodel = new QFileSystemModel(this);
     filemodel -> setFilter(QDir::NoDotAndDotDot | QDir::Files );
@@ -38,7 +41,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui -> ImgList -> setModel(filemodel);
 
-    ui->classList->setModel(filemodel);
 
 }
 
@@ -159,27 +161,56 @@ void MainWindow::on_ImgList_clicked(const QModelIndex &index)
 
 void MainWindow::on_loadClass_clicked()
 {
-   QString sPath = QFileDialog::getExistingDirectory(this, tr("Choose catalog"), ".", QFileDialog::ReadOnly);
-   QStringList filter;
-       filter << QLatin1String(".txt");
+//    QString sPath = QFileDialog::getOpenFileName(this, tr("Choose Class"), ".", tr("Text Files (*.txt))"));
+//    QStringList filter2;
+//    filter2<< QLatin1String("*.txt");
+//    dirmodel -> setNameFilters(filter2);
 
-       filemodel -> setNameFilters(filter);
+//    ui -> classList -> setRootIndex(dirmodel -> setRootPath(sPath));
 
-   ui -> classList -> setRootIndex(filemodel -> setRootPath(sPath));
+
+
+//    QString dPath = QFileDialog::getExistingDirectory(this, tr("Choose folder"), ".", QFileDialog::ReadOnly);
+//    QStringList filter;
+//    filter << QLatin1String("*.txt");;
+//    dirmodel -> setNameFilters(filter);
+
+//    ui -> classList ->setRootIndex(dirmodel -> setRootPath(dPath));
+
+    classFile = QFileDialog::getOpenFileName(this, tr("Open Class File"), "", "Class file (*.names)");
+    if(classFile.isEmpty())
+        return;
+    else{
+        QFile classNameFile(classFile);
+            if(!classNameFile.open(QIODevice::ReadOnly)){
+            QMessageBox::information(this, "Can not to open file", classNameFile.errorString());
+                return;
+        }
+        QTextStream in(&classNameFile);
+        ui->classList->clear();
+        while (!in.atEnd()){
+            QString line = in.readLine();
+
+            ui->classList->addItem(line);
+
+        }
+        classNameFile.close();
+    }
 }
 
 void MainWindow::on_addClass_clicked()
 {
-QString file_name= QFileDialog::getSaveFileName(this,tr("Save Class File"),"..",tr("Text file(*.txt"));
-QFile file(file_name);
-if(!file.open(QFile::WriteOnly | QFile::Text)){
-    QMessageBox::warning(this,"Error!","File was not saved.");
-    return;
-}
-QTextStream out(&file);
-QString text = ui->classNameField->toPlainText();
-out << text;
-file.close();
+    QString file_name= QFileDialog::getSaveFileName(this,tr("Save Class File"),".",tr("*.names"));
+    QFile file(file_name);
+    if(!file.open(QFile::WriteOnly | QFile::Text)){
+        QMessageBox::warning(this,"Error!","Could not open file for writing.");
+        return;
+    }
+    QTextStream out(&file);
+    QString text = ui->classNameField->toPlainText();
+    out << text;
+    file.flush();
+    file.close();
 }
 
 void MainWindow::loadImage(QString fileName)
