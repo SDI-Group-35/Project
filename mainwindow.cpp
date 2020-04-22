@@ -149,14 +149,6 @@ void MainWindow::on_WidgetImgList_currentItemChanged(QListWidgetItem *current)
 
 }
 
-void MainWindow::on_ImgList_clicked(const QModelIndex &index)
-{
-    pmap -> filename = filemodel -> filePath(index);
-
-    pmap -> loadImg(scene);
-    scene -> addItem(pmap);
-}
-
 void MainWindow::on_loadClass_clicked()
 {
    QString sPath = QFileDialog::getExistingDirectory(this, tr("Choose catalog"), ".", QFileDialog::ReadOnly);
