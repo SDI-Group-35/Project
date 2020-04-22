@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
     filemodel -> setFilter(QDir::NoDotAndDotDot | QDir::Files );
     filemodel-> setRootPath(sPath);
 
-    ui -> ImgList -> setModel(filemodel);
+    //ui -> ImgList -> setModel(filemodel);
 
     ui->classList->setModel(filemodel);
 
