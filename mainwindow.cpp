@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
     filemodel -> setFilter(QDir::NoDotAndDotDot | QDir::Files );
     filemodel-> setRootPath(sPath);
 
-    ui -> ImgList -> setModel(filemodel);
+    //ui -> ImgList -> setModel(filemodel);
 
 
 }
@@ -149,14 +149,6 @@ void MainWindow::on_WidgetImgList_currentItemChanged(QListWidgetItem *current)
     std::cout << fileName.toUtf8().constData() << std::endl;
     loadImage(fileName);
 
-}
-
-void MainWindow::on_ImgList_clicked(const QModelIndex &index)
-{
-    pmap -> filename = filemodel -> filePath(index);
-
-    pmap -> loadImg(scene);
-    scene -> addItem(pmap);
 }
 
 void MainWindow::on_loadClass_clicked()

@@ -67,16 +67,6 @@
       </property>
      </widget>
     </widget>
-    <widget class="QListView" name="ImgList">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>256</width>
-       <height>192</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QListWidget" name="WidgetImgList">
      <property name="geometry">
       <rect>
