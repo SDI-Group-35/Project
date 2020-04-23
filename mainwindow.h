@@ -45,8 +45,8 @@ public slots:
     void drawPolygon(const QPolygonF &polygon);
     void removePolygon(polygonDraw *Dpoly);
     void updateClassName(QGraphicsTextItem *CName);
-    void on_classAddButton_clicked();
-    void on_classDelete_clicked();
+//    void on_classAddButton_clicked();
+//    void on_classDelete_clicked();
 
 protected:
 
@@ -72,29 +72,37 @@ private slots:
 
     void on_WidgetImgList_currentItemChanged(QListWidgetItem *current);
 
-    void on_ImgList_itemActivated(QListWidgetItem *item);
+//    void on_ImgList_itemActivated(QListWidgetItem *item);
 
-    void on_ImgList_itemPressed(QListWidgetItem *item);
+//    void on_ImgList_itemPressed(QListWidgetItem *item);
 
-    void on_ImgList_itemDoubleClicked(QListWidgetItem *item);
+//    void on_ImgList_itemDoubleClicked(QListWidgetItem *item);
 
-    void on_ImgList_clicked(const QModelIndex &index);
+//    void on_ImgList_clicked(const QModelIndex &index);
 
-    void on_pushButton_4_clicked();
+//    void on_pushButton_4_clicked();
 
-    void on_pushButton_2_clicked();
+//    void on_pushButton_2_clicked();
 
-    void on_listView_clicked(const QModelIndex &index);
+//    void on_listView_clicked(const QModelIndex &index);
 
     void on_loadClass_clicked();
 
-    void on_pushButton_3_clicked();
+//    void on_pushButton_3_clicked();
 
-    void on_pushButton_7_clicked();
+//    void on_pushButton_7_clicked();
 
     void on_addClass_clicked();
 
     void loadImage(QString fileName);
+
+    void on_imgSortAsc_clicked();
+
+    void on_imgSortDesc_clicked();
+
+    void on_classSortAsc_clicked();
+
+    void on_classSortDesc_clicked();
 
 private:
     Ui::MainWindow *ui;
