@@ -103,5 +103,6 @@ int linkedList::loadSearch(QString data)
 {
     int Switch = img.search(data);
     return Switch;
+
 }
 
