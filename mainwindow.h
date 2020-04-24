@@ -83,9 +83,18 @@ private slots:
 
     void getSearchName();
 
+
     void searchN(QString SearchN);
 
     void on_SearchButton_clicked();
+
+    void on_imgSortAsc_clicked();
+
+    void on_imgSortDesc_clicked();
+
+    void on_classSortAsc_clicked();
+
+    void on_classSortDesc_clicked();
 
 private:
     Ui::MainWindow *ui;
