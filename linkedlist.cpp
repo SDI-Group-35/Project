@@ -1,9 +1,8 @@
 #include "linkedlist.h"
 #include <iostream>
-#include <string>
 using namespace std;
 
-   linkedList img;
+
 /* List releated */
 /* Initialize all of them to NULL */
 linkedList::linkedList(){
@@ -12,7 +11,7 @@ linkedList::linkedList(){
     temp = NULL;
 }
 /* Define addNode function */
-void linkedList::addNode(QString addData){
+void linkedList::addNode(int addData){
     nodePtr n = new node;   /* Node pointer n point to a newly created node*/
     n->next = NULL;         /* Finding the node n is poiting to and setting its pointer to NULL */
     n->data = addData;
@@ -60,49 +59,9 @@ void linkedList::deleteNode(int delData){
 void linkedList::printList(){
     curr = head;
     while(curr != NULL){
-        std::cout << curr->data.toUtf8().constData() << std::endl;
+        cout<< curr->data << endl;
         curr = curr->next;
     }
 }
 
-void linkedList::loadList(QString v)
-{
-
-    img.addNode(v);
-
-}
-
-void linkedList::print()
-{
-    img.printList();
-}
-
-
-int linkedList::search(QString searchData)
-{
-    int Switch;
-    curr = head;
-    if (curr == NULL){
-        Switch = 0;
-    }
-    while(curr != NULL){
-        if (curr -> data == searchData) {
-            Switch = 1;
-            return Switch;
-        }
-        else {
-            Switch = 0;
-        }
-        curr = curr->next;
-    }
-
-    return Switch;
-}
-
-int linkedList::loadSearch(QString data)
-{
-    int Switch = img.search(data);
-    return Switch;
-
-}
 

@@ -1,14 +1,12 @@
-﻿#ifndef LINKEDLIST_H
+#ifndef LINKEDLIST_H
 #define LINKEDLIST_H
-
-#include <QString>
 
 /* Linked List */
 class linkedList{
 
 private:
     typedef struct node{
-        QString data;
+        int data;
         node* next;
     }* nodePtr;     /* naming and function called defined as nodePtr */
 
@@ -19,13 +17,9 @@ private:
     /* This is where to functions goes to access private data */
 public:
     linkedList();
-    void addNode(QString addData);      /* Add a node and place a certain value in it */
+    void addNode(int addData);      /* Add a node and place a certain value in it */
     void deleteNode(int delData);   /* Whatever value is passed in here, will be searched through the list and removed */
-    void printList();  /*  */
-    void loadList(QString v);
-    void print();
-    int search(QString data);
-    int loadSearch(QString data);
+    void printList();               /*  */
 };
 
 #endif // LINKEDLIST_H
