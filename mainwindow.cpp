@@ -1,4 +1,5 @@
 ﻿#include "mainwindow.h"
+#include "linkedlist.h"
 #include "ui_mainwindow.h"
 #include "polygonDraw.h"
 #include <iostream>
@@ -10,7 +11,8 @@
 #include <QString>
 #include <QLabel>
 #include <QVector>
-
+#include <QInputDialog>
+#include <QLineEdit>
 
 using namespace std;
 
@@ -114,26 +116,21 @@ void MainWindow::on_pushButton_clicked()
     if (images.length() > 0) {
         // store path for later
         currentFolder = directory.path();
-        qInfo() << currentFolder << endl;
+        qInfo() << currentFolder << "cat" << endl;
         foreach(QString image, images) {
-        ui -> WidgetImgList -> addItem(image);
+            //loads image names to image name pane
+            ui -> WidgetImgList -> addItem(image);
+            //loads image names into Link List
+            lList->loadList(image);
         }
-    } else
+    }
+    else
     {
         // show user error box if no images were found in folder
         //QMessageBox::information(this, "ERROR", "No images found in that directory");
     }
 
-//    QString sPath = QFileDialog::getExistingDirectory(this, tr("Choose catalog"), ".", QFileDialog::ReadOnly);
-//    QStringList filter;
-//        filter << QLatin1String(".png");
-//        filter << QLatin1String(".jpeg");
-//        filter << QLatin1String(".jpg");
-//        filter << QLatin1String(".gif");
-//        filter << QLatin1String("*.raw");
-//        filemodel -> setNameFilters(filter);
-
-//    ui -> ImgList -> setRootIndex(filemodel -> setRootPath(sPath));
+    lList->print();
 
 }
 
@@ -182,10 +179,11 @@ void MainWindow::on_loadClass_clicked()
         ui->classList->clear();
         while (!in.atEnd()){
             QString line = in.readLine();
-
+            //lList->addNode(line);
             ui->classList->addItem(line);
 
         }
+        //lList->printList();
         classNameFile.close();
     }
 }
@@ -209,13 +207,42 @@ void MainWindow::loadImage(QString fileName)
 {
     QImage image;
     if(image.load(fileName)){
-        cout <<"hello";
         scene = new QGraphicsScene;
         pmap->setPixmap(QPixmap::fromImage(image));
         scene->addItem(pmap);
         ui->graphicsView->setScene(scene);
 
     }
+}
+
+
+void MainWindow::searchN(QString SearchN)
+{
+    Switch = lList->loadSearch(SearchN);
+
+    if (Switch == 1)
+    {
+        ui->searchLineEdit->setText("Found");
+    }
+    else if (Switch == 0)
+    {
+       ui->searchLineEdit->setText("Not Found");
+    }
+}
+
+
+void MainWindow::getSearchName()
+{
+    QString Q = ui->searchLineEdit->text();
+    searchN(Q);
+    std::cout << Q.toUtf8().constData() << std::endl;
+
+}
+
+
+void MainWindow::on_SearchButton_clicked()
+{
+    getSearchName();
 }
 
 //Sorting functions
@@ -308,4 +335,5 @@ void MainWindow::on_classSortDesc_clicked()
     for (int i =0;i<size;i++){
         ui->classList->insertItem(i,realList[i]);
     }
+
 }
