@@ -209,13 +209,41 @@ void MainWindow::loadImage(QString fileName)
 {
     QImage image;
     if(image.load(fileName)){
-        cout <<"hello";
         scene = new QGraphicsScene;
         pmap->setPixmap(QPixmap::fromImage(image));
         scene->addItem(pmap);
         ui->graphicsView->setScene(scene);
 
     }
+}
+
+void MainWindow::searchN(QString SearchN)
+{
+    Switch = lList->loadSearch(SearchN);
+
+    if (Switch == 1)
+    {
+        ui->searchLineEdit->setText("Found");
+    }
+    else if (Switch == 0)
+    {
+       ui->searchLineEdit->setText("Not Found");
+    }
+}
+
+
+void MainWindow::getSearchName()
+{
+    QString Q = ui->searchLineEdit->text();
+    searchN(Q);
+    std::cout << Q.toUtf8().constData() << std::endl;
+
+}
+
+
+void MainWindow::on_searchButton_clicked()
+{
+    getSearchName();
 }
 
 //Sorting functions
@@ -309,3 +337,4 @@ void MainWindow::on_classSortDesc_clicked()
         ui->classList->insertItem(i,realList[i]);
     }
 }
+
