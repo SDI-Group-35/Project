@@ -217,3 +217,95 @@ void MainWindow::loadImage(QString fileName)
 
     }
 }
+
+//Sorting functions
+QStringList sorting (QListWidget* fileList,int sort){
+
+    QStringList images;
+    int size = fileList->count();
+
+    qDebug() << "size of image list "<< size;
+
+    QString temp;
+    int j;
+//places current files into a list
+    for (int k=0;k<size;k++){
+        images.append(fileList->item(k)->text());
+    }
+    //when sort = 1 ascending insertion sort
+    if (sort == 1){
+    for (int i = 1;i<size;i++){
+        temp = images[i];
+        j=i;
+        while(j>0 && temp<images[j-1]){
+            images[j]=images[j-1];
+            images[j-1]=temp;
+
+            j--;
+        }
+    }
+    }
+    //sort = 0 meaning descending insertion sort
+    else if(sort == 0){
+        for (int i = 1;i<size;i++){
+            temp = images[i];
+            j=i;
+            while(j>0 && temp>images[j-1]){
+                images[j]=images[j-1];
+                images[j-1]=temp;
+
+                j--;
+            }
+        }
+    }
+    return images;
+}
+
+
+void MainWindow::on_imgSortAsc_clicked()
+{
+    int size = ui->WidgetImgList->count();
+
+    QStringList realList;
+    realList = sorting(ui->WidgetImgList,1);
+    ui->WidgetImgList->clear();
+    for (int i =0;i<size;i++){
+        ui->WidgetImgList->insertItem(i,realList[i]);
+    }
+}
+
+void MainWindow::on_imgSortDesc_clicked()
+{
+    int size = ui->WidgetImgList->count();
+
+    QStringList realList;
+    realList = sorting(ui->WidgetImgList,0);
+    ui->WidgetImgList->clear();
+    for (int i =0;i<size;i++){
+        ui->WidgetImgList->insertItem(i,realList[i]);
+    }
+}
+
+void MainWindow::on_classSortAsc_clicked()
+{
+    int size = ui->classList->count();
+
+    QStringList realList;
+    realList = sorting(ui->classList,1);
+    ui->classList->clear();
+    for (int i =0;i<size;i++){
+        ui->classList->insertItem(i,realList[i]);
+    }
+}
+
+void MainWindow::on_classSortDesc_clicked()
+{
+    int size = ui->classList->count();
+
+    QStringList realList;
+    realList = sorting(ui->classList,0);
+    ui->classList->clear();
+    for (int i =0;i<size;i++){
+        ui->classList->insertItem(i,realList[i]);
+    }
+}
