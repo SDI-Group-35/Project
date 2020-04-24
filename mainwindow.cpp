@@ -1,6 +1,7 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "polygonDraw.h"
+#include "linkedlist.h"
 #include <iostream>
 #include <QGraphicsLineItem>
 #include <QDebug>
@@ -10,6 +11,8 @@
 #include <QString>
 #include <QLabel>
 #include <QVector>
+#include <QInputDialog>
+#include <QLineEdit>
 
 
 using namespace std;
@@ -116,13 +119,18 @@ void MainWindow::on_pushButton_clicked()
         currentFolder = directory.path();
         qInfo() << currentFolder << endl;
         foreach(QString image, images) {
-        ui -> WidgetImgList -> addItem(image);
+            //loads image names to image name pane
+            ui -> WidgetImgList -> addItem(image);
+            //loads image names into Link List
+            lList->loadList(image);
         }
     } else
     {
         // show user error box if no images were found in folder
         //QMessageBox::information(this, "ERROR", "No images found in that directory");
     }
+
+    lList->print();
 
 //    QString sPath = QFileDialog::getExistingDirectory(this, tr("Choose catalog"), ".", QFileDialog::ReadOnly);
 //    QStringList filter;
