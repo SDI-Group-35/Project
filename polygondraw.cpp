@@ -23,7 +23,8 @@ polygonDraw::polygonDraw(QPolygonF polygon, QObject *parent):QGraphicsPolygonIte
 void polygonDraw:: updateClassValue(QGraphicsTextItem *){
 
 
-    ClassName = new QGraphicsTextItem("Sam");
+    //ClassName = new QGraphicsTextItem(mMain->getAnnotationName());
+    ClassName = new QGraphicsTextItem("Class Name");
 
 }
 

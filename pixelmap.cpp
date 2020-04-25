@@ -11,7 +11,7 @@ pixelmap::pixelmap(QObject *parent)
 }
 
 /* loads image */
-void pixelmap::loadImg(QGraphicsScene *scene)
+void pixelmap::loadImg(QGraphicsScene *)
 {
 
     QImage image(filename);

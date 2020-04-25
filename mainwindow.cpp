@@ -13,6 +13,9 @@
 #include <QVector>
 #include <QInputDialog>
 #include <QLineEdit>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QJsonArray>
 
 
 using namespace std;
@@ -22,8 +25,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 
 {
-
-
     ui->setupUi(this);
     setWindowTitle("Annotation Tool");
     pmap=new pixelmap(this);
@@ -31,36 +32,11 @@ MainWindow::MainWindow(QWidget *parent)
     scene = new QGraphicsScene(this);
     ui -> graphicsView -> setScene(scene);
 
-
-    QString sPath = "C:/";
-    annotationName = "";
-
-    dirmodel = new QFileSystemModel(this);
-    dirmodel -> setFilter(QDir::NoDotAndDotDot | QDir::Files);
-    dirmodel -> setRootPath(sPath);
-
-
-    filemodel = new QFileSystemModel(this);
-    filemodel -> setFilter(QDir::NoDotAndDotDot | QDir::Files );
-    filemodel-> setRootPath(sPath);
-
-    //ui -> ImgList -> setModel(filemodel);
-
-
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-
-/* Load image button is clicked */
-void MainWindow::on_actionLoad_triggered()
-{
-    //pmap -> loadImg(scene);
-
-    //scene -> addItem(pmap);
 }
 
 
@@ -86,6 +62,8 @@ void MainWindow:: drawPolygon(const QPolygonF &polygon)
     {
         delete line;
     }
+
+    shapes.append(polygon);
 }
 
 /* Remove polygon */
@@ -107,6 +85,7 @@ void MainWindow::on_polyShape_clicked()
     pmap -> PolygonOn = 1;
 }
 
+/* Load image button is clicked */
 void MainWindow::on_pushButton_clicked()
 {
     // browse dialog box to locate images folder, then load folder contents to QDir class
@@ -126,25 +105,8 @@ void MainWindow::on_pushButton_clicked()
             //loads image names into Link List
             lList->loadList(image);
         }
-    } else
-    {
-        // show user error box if no images were found in folder
-        //QMessageBox::information(this, "ERROR", "No images found in that directory");
     }
-
     lList->print();
-
-//    QString sPath = QFileDialog::getExistingDirectory(this, tr("Choose catalog"), ".", QFileDialog::ReadOnly);
-//    QStringList filter;
-//        filter << QLatin1String(".png");
-//        filter << QLatin1String(".jpeg");
-//        filter << QLatin1String(".jpg");
-//        filter << QLatin1String(".gif");
-//        filter << QLatin1String("*.raw");
-//        filemodel -> setNameFilters(filter);
-
-//    ui -> ImgList -> setRootIndex(filemodel -> setRootPath(sPath));
-
 }
 
 
@@ -152,7 +114,6 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::on_WidgetImgList_currentItemChanged(QListWidgetItem *current)
 {
 
-    //scene->removeItem(pmap);
     // store filename ready for opening
     currentFile = current->text();
     fileName = currentFolder + '/' + currentFile;
@@ -226,12 +187,6 @@ void MainWindow::on_saveClass_clicked()
         file.close();
 }
 
-void MainWindow::on_classList_currentRowChanged(int currentRow)
-{
-    annotationName = ui->classList->item(currentRow)->text();
-    qDebug()<<annotationName<<endl;
-
-}
 void MainWindow::searchN(QString SearchN)
 {
     Switch = lList->loadSearch(SearchN);
@@ -351,4 +306,59 @@ void MainWindow::on_classSortDesc_clicked()
     for (int i =0;i<size;i++){
         ui->classList->insertItem(i,realList[i]);
     }
+}
+
+void MainWindow::on_pushButton_5_clicked()
+{
+    int numOfPoints=0;
+     QJsonArray shapeJsonArray;
+     QJsonObject shapeJsonObject;
+     QJsonArray coodJsonArray;
+     QJsonObject pointJsonObject;
+     QJsonObject coorJsonObject;
+
+
+     QJsonObject object;
+     QString intialPath = QDir::currentPath() + "/untitled.json";
+     QString textFileName = QFileDialog::getSaveFileName(this, tr("Save as"), intialPath);
+     QFile jsonFile(textFileName);
+     jsonFile.open(QFile::WriteOnly);
+     object.insert("Image-path", fileName);
+     QString shapeType= "polygon";
+     object.insert("Shape type", shapeType);
+     for(int i=0;i<shapes.size();i++)
+     {
+         numOfPoints=shapes[i].count();
+
+         for(int j=0;j<numOfPoints;j++)
+         {
+             pointJsonObject.insert("x",shapes[i][j].x());
+             pointJsonObject.insert("y",shapes[i][j].y());
+             coodJsonArray.append(pointJsonObject);
+         }
+         coorJsonObject.insert("coordinates",coodJsonArray);
+         for(int j=0;j<numOfPoints;j++)
+         {
+             coodJsonArray.removeFirst();
+         }
+         shapeJsonObject.insert("annotation",0);//to do assign annotation when annotation linked to shape
+         shapeJsonArray.append(shapeJsonObject);
+         shapeJsonArray.append(coorJsonObject);
+     }
+     object.insert("shapes",shapeJsonArray);
+     QJsonDocument jsonDoc(object);
+     jsonFile.write(jsonDoc.toJson());
+     jsonFile.close();
+}
+
+//void MainWindow::on_classList_currentItemChanged(QListWidgetItem *current)
+//{
+//    annotationName = current->text();
+//    std::cout << annotationName.toUtf8().constData() << std::endl;
+//}
+
+void MainWindow::on_classList_currentTextChanged(const QString &currentText)
+{
+    annotationName = currentText;
+    std::cout << annotationName.toUtf8().constData() << std::endl;
 }

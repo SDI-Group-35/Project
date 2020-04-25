@@ -8,7 +8,6 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QMouseEvent>
-
 #include <QDialog>
 #include <QFile>
 #include <QFileSystemModel>
@@ -38,11 +37,13 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    QString classNameField;
     QString currentFolder;
-    QString currentFile = "";
-    QString fileName = "";
+    QString currentFile;
+    QString fileName;
     int Switch;
+    QVector<QPolygonF> shapes;
+    QString annotationName = "";
+    QString getAnnotationName(){return annotationName;}
 
 public slots:
     void drawLines(const QPointF &firstP , const QPointF &secondP);
@@ -52,20 +53,7 @@ public slots:
 
 protected:
 
-    /* Save and Load Classes  start*/
-    void saveToFile();
-    void loadFromFile();
-
-    QPushButton *loadButton;
-    QPushButton *saveButton;
-
-    /* Save and Load Classes end*/
-
-
-
 private slots:
-
-    void on_actionLoad_triggered();
 
     void on_polyShape_clicked();
 
@@ -89,16 +77,19 @@ private slots:
 
     void on_searchButton_clicked();
 
-    void on_classList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
-
     void getSearchName();
 
     void searchN(QString SearchN);
+
     void on_deleteClass_clicked();
 
     void on_saveClass_clicked();
 
-    void on_classList_currentRowChanged(int currentRow);
+    void on_pushButton_5_clicked();
+
+    void on_classList_currentItemChanged(QListWidgetItem *current);
+
+    void on_classList_currentTextChanged(const QString &currentText);
 
 private:
     Ui::MainWindow *ui;
@@ -129,9 +120,6 @@ private:
     QString classFile;
 
     QString classNameFile;
-
-    QString annotationName;
-
 
 };
 #endif // MAINWINDOW_H

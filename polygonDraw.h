@@ -10,6 +10,8 @@
 #include <QGraphicsTextItem>
 #include <QVector2D>
 
+class MainWindow;
+
 class polygonDraw : public QObject, public QGraphicsPolygonItem
 {
     Q_OBJECT
@@ -42,6 +44,8 @@ private:
     /* Annotation Variable */
     QPolygonF newPoly;
     QPointF PolyPoint;
+
+    MainWindow *mMain;
 
 
 };
