@@ -6,6 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
+    <width>1022</width>
+    <height>713</height>
     <width>1015</width>
     <height>676</height>
    </rect>
@@ -43,7 +45,7 @@
       <x>10</x>
       <y>10</y>
       <width>281</width>
-      <height>251</height>
+      <height>281</height>
      </rect>
     </property>
     <property name="title">
@@ -67,16 +69,6 @@
       </property>
      </widget>
     </widget>
-    <widget class="QListView" name="ImgList">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>256</width>
-       <height>192</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QListWidget" name="WidgetImgList">
      <property name="geometry">
       <rect>
@@ -87,6 +79,32 @@
       </rect>
      </property>
     </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>240</y>
+       <width>251</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QPushButton" name="imgSortAsc">
+        <property name="text">
+         <string>Sort Asc</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="imgSortDesc">
+        <property name="text">
+         <string>Sort Desc</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_3">
     <property name="geometry">
@@ -94,38 +112,12 @@
       <x>300</x>
       <y>10</y>
       <width>591</width>
-      <height>571</height>
+      <height>531</height>
      </rect>
     </property>
     <property name="title">
      <string>Image in use</string>
     </property>
-    <widget class="QToolButton" name="zoomOut">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>530</y>
-       <width>61</width>
-       <height>19</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Zoom out</string>
-     </property>
-    </widget>
-    <widget class="QToolButton" name="zoomIn">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>530</y>
-       <width>61</width>
-       <height>19</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Zoom In</string>
-     </property>
-    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_4">
     <property name="geometry">
@@ -221,6 +213,10 @@
       <y>282</y>
       <width>258</width>
       <height>256</height>
+      <x>20</x>
+      <y>300</y>
+      <width>261</width>
+      <height>301</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -274,6 +270,56 @@
      </item>
     </layout>
    </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>600</y>
+      <width>261</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QPushButton" name="classSortAsc">
+       <property name="text">
+        <string>Sort Asc</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="classSortDesc">
+       <property name="text">
+        <string>Sort Desc</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="searchButton">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>550</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Search</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="searchLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>550</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <zorder>layoutWidget</zorder>
    <zorder>splitter_3</zorder>
    <zorder>splitter_5</zorder>
    <zorder>groupBox_4</zorder>
@@ -282,13 +328,15 @@
    <zorder>polyShape</zorder>
    <zorder>groupBox</zorder>
    <zorder>layoutWidget</zorder>
+   <zorder>searchButton</zorder>
+   <zorder>searchLineEdit</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1015</width>
+     <width>1022</width>
      <height>21</height>
     </rect>
    </property>

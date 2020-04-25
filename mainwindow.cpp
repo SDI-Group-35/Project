@@ -1,6 +1,7 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "polygonDraw.h"
+#include "linkedlist.h"
 #include <iostream>
 #include <QGraphicsLineItem>
 #include <QDebug>
@@ -10,8 +11,9 @@
 #include <QString>
 #include <QLabel>
 #include <QVector>
-#include <addclass.h>
-#include <QDebug>
+#include <QInputDialog>
+#include <QLineEdit>
+#include <qDebug>
 
 
 using namespace std;
@@ -43,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
     filemodel -> setFilter(QDir::NoDotAndDotDot | QDir::Files );
     filemodel-> setRootPath(sPath);
 
-    ui -> ImgList -> setModel(filemodel);
+    //ui -> ImgList -> setModel(filemodel);
 
 
 }
@@ -120,13 +122,18 @@ void MainWindow::on_pushButton_clicked()
         currentFolder = directory.path();
         qInfo() << currentFolder << endl;
         foreach(QString image, images) {
-        ui -> WidgetImgList -> addItem(image);
+            //loads image names to image name pane
+            ui -> WidgetImgList -> addItem(image);
+            //loads image names into Link List
+            lList->loadList(image);
         }
     } else
     {
         // show user error box if no images were found in folder
         //QMessageBox::information(this, "ERROR", "No images found in that directory");
     }
+
+    lList->print();
 
 //    QString sPath = QFileDialog::getExistingDirectory(this, tr("Choose catalog"), ".", QFileDialog::ReadOnly);
 //    QStringList filter;
@@ -153,14 +160,6 @@ void MainWindow::on_WidgetImgList_currentItemChanged(QListWidgetItem *current)
     std::cout << fileName.toUtf8().constData() << std::endl;
     loadImage(fileName);
 
-}
-
-void MainWindow::on_ImgList_clicked(const QModelIndex &index)
-{
-    pmap -> filename = filemodel -> filePath(index);
-
-    pmap -> loadImg(scene);
-    scene -> addItem(pmap);
 }
 
 void MainWindow::on_loadClass_clicked()
@@ -213,7 +212,6 @@ void MainWindow::loadImage(QString fileName)
 {
     QImage image;
     if(image.load(fileName)){
-        cout <<"hello";
         scene = new QGraphicsScene;
         pmap->setPixmap(QPixmap::fromImage(image));
         scene->addItem(pmap);
@@ -249,4 +247,124 @@ void MainWindow::on_classList_currentRowChanged(int currentRow)
     annotationName = ui->classList->item(currentRow)->text();
     qDebug()<<annotationName<<endl;
 
+}
+void MainWindow::searchN(QString SearchN)
+{
+    Switch = lList->loadSearch(SearchN);
+
+    if (Switch == 1)
+    {
+        ui->searchLineEdit->setText("Found");
+    }
+    else if (Switch == 0)
+    {
+       ui->searchLineEdit->setText("Not Found");
+    }
+}
+
+
+void MainWindow::getSearchName()
+{
+    QString Q = ui->searchLineEdit->text();
+    searchN(Q);
+    std::cout << Q.toUtf8().constData() << std::endl;
+
+}
+
+
+void MainWindow::on_searchButton_clicked()
+{
+    getSearchName();
+}
+
+//Sorting functions
+QStringList sorting (QListWidget* fileList,int sort){
+
+    QStringList images;
+    int size = fileList->count();
+
+    qDebug() << "size of image list "<< size;
+
+    QString temp;
+    int j;
+//places current files into a list
+    for (int k=0;k<size;k++){
+        images.append(fileList->item(k)->text());
+    }
+    //when sort = 1 ascending insertion sort
+    if (sort == 1){
+    for (int i = 1;i<size;i++){
+        temp = images[i];
+        j=i;
+        while(j>0 && temp<images[j-1]){
+            images[j]=images[j-1];
+            images[j-1]=temp;
+
+            j--;
+        }
+    }
+    }
+    //sort = 0 meaning descending insertion sort
+    else if(sort == 0){
+        for (int i = 1;i<size;i++){
+            temp = images[i];
+            j=i;
+            while(j>0 && temp>images[j-1]){
+                images[j]=images[j-1];
+                images[j-1]=temp;
+
+                j--;
+            }
+        }
+    }
+    return images;
+}
+
+
+void MainWindow::on_imgSortAsc_clicked()
+{
+    int size = ui->WidgetImgList->count();
+
+    QStringList realList;
+    realList = sorting(ui->WidgetImgList,1);
+    ui->WidgetImgList->clear();
+    for (int i =0;i<size;i++){
+        ui->WidgetImgList->insertItem(i,realList[i]);
+    }
+}
+
+void MainWindow::on_imgSortDesc_clicked()
+{
+    int size = ui->WidgetImgList->count();
+
+    QStringList realList;
+    realList = sorting(ui->WidgetImgList,0);
+    ui->WidgetImgList->clear();
+    for (int i =0;i<size;i++){
+        ui->WidgetImgList->insertItem(i,realList[i]);
+    }
+}
+
+void MainWindow::on_classSortAsc_clicked()
+{
+    int size = ui->classList->count();
+
+    QStringList realList;
+    realList = sorting(ui->classList,1);
+    ui->classList->clear();
+    for (int i =0;i<size;i++){
+        ui->classList->insertItem(i,realList[i]);
+    }
+}
+
+void MainWindow::on_classSortDesc_clicked()
+{
+    int size = ui->classList->count();
+
+    QStringList realList;
+    realList = sorting(ui->classList,0);
+    ui->classList->clear();
+    for (int i =0;i<size;i++){
+        ui->classList->insertItem(i,realList[i]);
+    }
 }

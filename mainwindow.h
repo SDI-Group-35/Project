@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "pixelmap.h"
 #include "polygonDraw.h"
+#include "linkedlist.h"
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QMouseEvent>
@@ -22,6 +23,8 @@
 
 #include <QListView>
 
+class linkedList;
+
 extern int draw;
 
 QT_BEGIN_NAMESPACE
@@ -39,14 +42,13 @@ public:
     QString currentFolder;
     QString currentFile = "";
     QString fileName = "";
+    int Switch;
 
 public slots:
     void drawLines(const QPointF &firstP , const QPointF &secondP);
     void drawPolygon(const QPolygonF &polygon);
     void removePolygon(polygonDraw *Dpoly);
     void updateClassName(QGraphicsTextItem *CName);
-    void on_classAddButton_clicked();
-    void on_classDelete_clicked();
 
 protected:
 
@@ -71,22 +73,30 @@ private slots:
 
     void on_WidgetImgList_currentItemChanged(QListWidgetItem *current);
 
-    void on_ImgList_itemActivated(QListWidgetItem *item);
+    void on_loadClass_clicked();
 
-    void on_ImgList_itemPressed(QListWidgetItem *item);
+    void on_addClass_clicked();
 
-    void on_ImgList_itemDoubleClicked(QListWidgetItem *item);
+    void loadImage(QString fileName);
 
-    void on_ImgList_clicked(const QModelIndex &index);
+    void on_imgSortAsc_clicked();
 
+    void on_imgSortDesc_clicked();
+
+    void on_classSortAsc_clicked();
+
+    void on_classSortDesc_clicked();
+
+    void on_searchButton_clicked();
     void on_loadClass_clicked();
 
     void loadImage(QString fileName);
 
     void on_classList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 
-    void on_addClass_clicked();
+    void getSearchName();
 
+    void searchN(QString SearchN);
     void on_deleteClass_clicked();
 
     void on_saveClass_clicked();
@@ -95,6 +105,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+    linkedList *lList;
 
     polygonDraw *pointer;
 
