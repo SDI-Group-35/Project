@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1015</width>
-    <height>1060</height>
+    <height>710</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,9 +31,9 @@
     <property name="geometry">
      <rect>
       <x>900</x>
-      <y>19</y>
+      <y>9</y>
       <width>101</width>
-      <height>391</height>
+      <height>401</height>
      </rect>
     </property>
     <property name="title">
@@ -91,178 +91,210 @@
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>340</y>
-      <width>261</width>
+      <x>10</x>
+      <y>10</y>
+      <width>281</width>
       <height>301</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QListWidget" name="classList"/>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLineEdit" name="addClassText"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="addClass">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Add</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <widget class="QPushButton" name="saveClass">
-       <property name="text">
-        <string>Save Class</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QPushButton" name="loadClass">
-         <property name="text">
-          <string>Load Class</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="deleteClass">
-         <property name="text">
-          <string>Delete Class</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="">
-    <property name="geometry">
-     <rect>
-      <x>310</x>
-      <y>40</y>
-      <width>571</width>
-      <height>601</height>
-     </rect>
+    <property name="title">
+     <string>Images</string>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
-      <widget class="QGraphicsView" name="graphicsView"/>
-     </item>
-     <item>
-      <widget class="QSplitter" name="splitter_3">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <widget class="QPushButton" name="pushButton_5">
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>258</width>
+       <height>254</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QListWidget" name="WidgetImgList"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton">
         <property name="text">
-         <string>Save Annotaions</string>
+         <string>Load Image</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_6">
-        <property name="text">
-         <string>Load Annotaions</string>
-        </property>
-       </widget>
-      </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
-        <widget class="QPushButton" name="searchButton">
-         <property name="text">
-          <string>Search</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="searchLineEdit"/>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>218</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
-    </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QPushButton" name="imgSortAsc">
+          <property name="text">
+           <string>Sort Asc</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="imgSortDesc">
+          <property name="text">
+           <string>Sort Desc</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>40</y>
-      <width>258</width>
-      <height>254</height>
+      <x>300</x>
+      <y>10</y>
+      <width>591</width>
+      <height>651</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout_3">
-     <item>
-      <widget class="QListWidget" name="WidgetImgList"/>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pushButton">
-       <property name="text">
-        <string>Load Image</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QPushButton" name="imgSortAsc">
+    <property name="title">
+     <string>Image loaded</string>
+    </property>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>571</width>
+       <height>611</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QGraphicsView" name="graphicsView"/>
+      </item>
+      <item>
+       <widget class="QSplitter" name="splitter_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <widget class="QPushButton" name="pushButton_5">
          <property name="text">
-          <string>Sort Asc</string>
+          <string>Save Annotaions</string>
          </property>
         </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="imgSortDesc">
+        <widget class="QPushButton" name="pushButton_6">
          <property name="text">
-          <string>Sort Desc</string>
+          <string>Load Annotaions</string>
          </property>
         </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QPushButton" name="searchButton">
+          <property name="text">
+           <string>Search</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="searchLineEdit"/>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>218</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
    </widget>
-   <zorder>layoutWidget</zorder>
-   <zorder>splitter_3</zorder>
+   <widget class="QGroupBox" name="groupBox_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>320</y>
+      <width>281</width>
+      <height>341</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Classes</string>
+    </property>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>261</width>
+       <height>301</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QListWidget" name="classList"/>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLineEdit" name="addClassText"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="addClass">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Add</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QPushButton" name="saveClass">
+        <property name="text">
+         <string>Save Class</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QPushButton" name="loadClass">
+          <property name="text">
+           <string>Load Class</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="deleteClass">
+          <property name="text">
+           <string>Delete Class</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <zorder>groupBox_2</zorder>
    <zorder>splitter_5</zorder>
    <zorder>groupBox_4</zorder>
-   <zorder>graphicsView</zorder>
    <zorder>polyShape</zorder>
-   <zorder>layoutWidget</zorder>
-   <zorder>searchButton</zorder>
-   <zorder>searchLineEdit</zorder>
-   <zorder>WidgetImgList</zorder>
-   <zorder>imgSortDesc</zorder>
-   <zorder>imgSortAsc</zorder>
-   <zorder>pushButton</zorder>
+   <zorder>groupBox</zorder>
+   <zorder>groupBox_3</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
