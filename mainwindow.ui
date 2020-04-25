@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1015</width>
-    <height>623</height>
+    <height>676</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -214,23 +214,23 @@
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>280</y>
-      <width>261</width>
-      <height>301</height>
+      <x>22</x>
+      <y>282</y>
+      <width>258</width>
+      <height>256</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,30">
-     <property name="spacing">
-      <number>6</number>
-     </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
+      <widget class="QListWidget" name="classList"/>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QTextEdit" name="classNameField"/>
+        <widget class="QLineEdit" name="addClassText"/>
        </item>
        <item>
         <widget class="QPushButton" name="addClass">
@@ -248,27 +248,27 @@
       </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
+      <widget class="QPushButton" name="saveClass">
+       <property name="text">
+        <string>Save Class</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QListWidget" name="classList"/>
+        <widget class="QPushButton" name="loadClass">
+         <property name="text">
+          <string>Load Class</string>
+         </property>
+        </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <item>
-          <widget class="QPushButton" name="loadClass">
-           <property name="text">
-            <string>Load Class</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="deleteClass">
-           <property name="text">
-            <string>Delete Class</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QPushButton" name="deleteClass">
+         <property name="text">
+          <string>Delete Class</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>

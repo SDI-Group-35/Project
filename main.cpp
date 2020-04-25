@@ -6,6 +6,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    a.setStyle("fusion");
     QDesktopWidget dw;
     MainWindow w;
     int x = dw.width()*0.8;

@@ -67,7 +67,6 @@ private slots:
 
     void on_polyShape_clicked();
 
-
     void on_pushButton_clicked();
 
     void on_WidgetImgList_currentItemChanged(QListWidgetItem *current);
@@ -80,21 +79,19 @@ private slots:
 
     void on_ImgList_clicked(const QModelIndex &index);
 
-    void on_pushButton_4_clicked();
-
-    void on_pushButton_2_clicked();
-
-    void on_listView_clicked(const QModelIndex &index);
-
     void on_loadClass_clicked();
 
-    void on_pushButton_3_clicked();
+    void loadImage(QString fileName);
 
-    void on_pushButton_7_clicked();
+    void on_classList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 
     void on_addClass_clicked();
 
-    void loadImage(QString fileName);
+    void on_deleteClass_clicked();
+
+    void on_saveClass_clicked();
+
+    void on_classList_currentRowChanged(int currentRow);
 
 private:
     Ui::MainWindow *ui;
@@ -123,6 +120,8 @@ private:
     QString classFile;
 
     QString classNameFile;
+
+    QString annotationName;
 
 
 };

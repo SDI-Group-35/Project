@@ -10,6 +10,8 @@
 #include <QString>
 #include <QLabel>
 #include <QVector>
+#include <addclass.h>
+#include <QDebug>
 
 
 using namespace std;
@@ -22,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     ui->setupUi(this);
+    setWindowTitle("Annotation Tool");
     pmap=new pixelmap(this);
     //image = new QGraphicsPixmapItem();
     scene = new QGraphicsScene(this);
@@ -29,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     QString sPath = "C:/";
+    annotationName = "";
 
     dirmodel = new QFileSystemModel(this);
     dirmodel -> setFilter(QDir::NoDotAndDotDot | QDir::Files);
@@ -200,17 +204,9 @@ void MainWindow::on_loadClass_clicked()
 
 void MainWindow::on_addClass_clicked()
 {
-    QString file_name= QFileDialog::getSaveFileName(this,tr("Save Class File"),".",tr("*.names"));
-    QFile file(file_name);
-    if(!file.open(QFile::WriteOnly | QFile::Text)){
-        QMessageBox::warning(this,"Error!","Could not open file for writing.");
-        return;
-    }
-    QTextStream out(&file);
-    QString text = ui->classNameField->toPlainText();
-    out << text;
-    file.flush();
-    file.close();
+    QString className;
+    className = ui->addClassText->text();
+    ui->classList->addItem(className);
 }
 
 void MainWindow::loadImage(QString fileName)
@@ -222,6 +218,35 @@ void MainWindow::loadImage(QString fileName)
         pmap->setPixmap(QPixmap::fromImage(image));
         scene->addItem(pmap);
         ui->graphicsView->setScene(scene);
-
     }
+}
+
+void MainWindow::on_deleteClass_clicked()
+{
+    delete ui->classList->currentItem();
+}
+
+void MainWindow::on_saveClass_clicked()
+{
+        QString file_name= QFileDialog::getSaveFileName(this,tr("Save Class File"),".",tr("*.names"));
+        QFile file(file_name);
+        if(!file.open(QFile::WriteOnly | QFile::Text)){
+            QMessageBox::warning(this,"Error!","Could not open file for writing.");
+            return;
+        }
+        QTextStream out(&file);
+        int classes = ui->classList->count();
+        for(int i = 0; i < classes; i++)
+        {
+            out << ui->classList->item(i)->text()+ "\n";
+        }
+        file.flush();
+        file.close();
+}
+
+void MainWindow::on_classList_currentRowChanged(int currentRow)
+{
+    annotationName = ui->classList->item(currentRow)->text();
+    qDebug()<<annotationName<<endl;
+
 }
