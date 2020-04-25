@@ -151,45 +151,6 @@
      </item>
     </layout>
    </widget>
-   <widget class="QGroupBox" name="groupBox_3">
-    <property name="geometry">
-     <rect>
-      <x>300</x>
-      <y>10</y>
-      <width>591</width>
-      <height>641</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Image in use</string>
-    </property>
-   </widget>
-   <widget class="QGroupBox" name="groupBox">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>9</y>
-      <width>281</width>
-      <height>301</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Images</string>
-    </property>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_2">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>320</y>
-      <width>281</width>
-      <height>331</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Classes</string>
-    </property>
-   </widget>
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
@@ -289,7 +250,6 @@
      </item>
     </layout>
    </widget>
-   <zorder>groupBox_3</zorder>
    <zorder>layoutWidget</zorder>
    <zorder>splitter_3</zorder>
    <zorder>splitter_5</zorder>
@@ -303,8 +263,6 @@
    <zorder>imgSortDesc</zorder>
    <zorder>imgSortAsc</zorder>
    <zorder>pushButton</zorder>
-   <zorder>groupBox</zorder>
-   <zorder>groupBox_2</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

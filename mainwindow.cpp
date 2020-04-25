@@ -163,22 +163,7 @@ void MainWindow::on_WidgetImgList_currentItemChanged(QListWidgetItem *current)
 
 void MainWindow::on_loadClass_clicked()
 {
-//    QString sPath = QFileDialog::getOpenFileName(this, tr("Choose Class"), ".", tr("Text Files (*.txt))"));
-//    QStringList filter2;
-//    filter2<< QLatin1String("*.txt");
-//    dirmodel -> setNameFilters(filter2);
-
-//    ui -> classList -> setRootIndex(dirmodel -> setRootPath(sPath));
-
-
-
-//    QString dPath = QFileDialog::getExistingDirectory(this, tr("Choose folder"), ".", QFileDialog::ReadOnly);
-//    QStringList filter;
-//    filter << QLatin1String("*.txt");;
-//    dirmodel -> setNameFilters(filter);
-
-//    ui -> classList ->setRootIndex(dirmodel -> setRootPath(dPath));
-
+    ui->classList->clear();
     classFile = QFileDialog::getOpenFileName(this, tr("Open Class File"), "", "Class file (*.names)");
     if(classFile.isEmpty())
         return;
