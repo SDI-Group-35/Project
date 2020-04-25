@@ -13,7 +13,6 @@
 #include <QVector>
 #include <QInputDialog>
 #include <QLineEdit>
-#include <qDebug>
 
 
 using namespace std;

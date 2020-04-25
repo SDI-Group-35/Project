@@ -88,9 +88,6 @@ private slots:
     void on_classSortDesc_clicked();
 
     void on_searchButton_clicked();
-    void on_loadClass_clicked();
-
-    void loadImage(QString fileName);
 
     void on_classList_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 
