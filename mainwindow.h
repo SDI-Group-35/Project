@@ -18,6 +18,17 @@
 #include <QModelIndex>
 #include <QListWidget>
 #include <QVector>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QGraphicsLineItem>
+#include <QMessageBox>
+#include <QTextStream>
+#include <QLabel>
+#include <QInputDialog>
+#include <QLineEdit>
+
+
 
 
 #include <QListView>
@@ -37,13 +48,21 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    QString currentFolder;
-    QString currentFile;
+
+    QString FolderPath;
+    QString imageName;
     QString fileName;
     int Switch;
-    QVector<QPolygonF> shapes;
-    QString annotationName = "";
+
+    QVector<QPolygonF> savePolygon;
+    QJsonArray coordArray;
+    QJsonObject coordObject;
+    QJsonObject object;
+    int Sides=0;
+
+
     QString getAnnotationName(){return annotationName;}
+    QString annotationName = "No Class selected";
 
 public slots:
     void drawLines(const QPointF &firstP , const QPointF &secondP);
@@ -86,8 +105,6 @@ private slots:
     void on_saveClass_clicked();
 
     void on_pushButton_5_clicked();
-
-    void on_classList_currentItemChanged(QListWidgetItem *current);
 
     void on_classList_currentTextChanged(const QString &currentText);
 

@@ -21,7 +21,8 @@ public:
     void updateClassValue(QGraphicsTextItem *value);
     QGraphicsTextItem *retrieveClassName();
     void getPolygonPos();
-
+    QVector<QPointF> newPolyPoints;
+    QPointF P;
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);

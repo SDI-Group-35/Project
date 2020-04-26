@@ -9,8 +9,6 @@ int main(int argc, char *argv[])
     a.setStyle("fusion");
     QDesktopWidget dw;
     MainWindow w;
-//    int x = dw.width()*0.8;
-//    int y = dw.height()*0.8;
 
     int x = 1024;
     int y = 768;

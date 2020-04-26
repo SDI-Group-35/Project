@@ -1,6 +1,6 @@
 #include "linkedlist.h"
 #include <iostream>
-#include <string>
+
 using namespace std;
 
    linkedList img;
@@ -65,6 +65,7 @@ void linkedList::printList(){
     }
 }
 
+/*loading image names into the link list*/
 void linkedList::loadList(QString v)
 {
 
@@ -72,35 +73,36 @@ void linkedList::loadList(QString v)
 
 }
 
+/*loading image names from the link list to the console*/
 void linkedList::print()
 {
     img.printList();
 }
 
-
-int linkedList::search(QString searchData)
+/*Binary tree Search Algorithm */
+int linkedList::search(QString searchData) /*the parameter is the Image name the user has inputted */
 {
     int Switch;
-    curr = head;
+    curr = head; /*loads the first node in the link list */
     if (curr == NULL){
-        Switch = 0;
+        Switch = 0; /*IF nothing is inside the Link List switch will be off*/
     }
-    while(curr != NULL){
-        if (curr -> data == searchData) {
+    while(curr != NULL){ /*searches through link list*/
+        if (curr -> data == searchData) { /*tries to find a match */
             Switch = 1;
             return Switch;
         }
         else {
             Switch = 0;
         }
-        curr = curr->next;
+        curr = curr->next; /*loads next node*/
     }
     return Switch;
 }
 
 int linkedList::loadSearch(QString data)
 {
-    int Switch = img.search(data);
+    int Switch = img.search(data); /*returns 1 or 0 (Yes or No)*/
     return Switch;
 
 }

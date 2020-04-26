@@ -1,7 +1,5 @@
 #include "pixelmap.h"
 #include "mainwindow.h"
-#include <iostream>
-using namespace std;
 
 pixelmap::pixelmap(QObject *parent)
 {
@@ -10,67 +8,51 @@ pixelmap::pixelmap(QObject *parent)
     connect(this, SIGNAL(drawPolygon(QPolygonF)), parent, SLOT(drawPolygon(QPolygonF)));
 }
 
-/* loads image */
-void pixelmap::loadImg(QGraphicsScene *)
+void pixelmap::loadImg(QGraphicsScene *) /* loads image to Pixmap */
 {
-
-    QImage image(filename);
-
-
+    QImage image(filename);  /* load image onto QImage */
     if (true)
     {
-        /* load image onto pixmap (canvas) */
-        QPixmap *p = new QPixmap(QPixmap::fromImage(image));
-
-        /* update pixmap */
-        setPixmap(*p);
+        QPixmap *p = new QPixmap(QPixmap::fromImage(image));  /* load image onto pixmap (canvas) */
+        setPixmap(*p);  /* update pixmap */
     }
-
 }
 
 
-void pixelmap::mousePressEvent(QGraphicsSceneMouseEvent * event){
+void pixelmap::mousePressEvent(QGraphicsSceneMouseEvent * event){ /*drawing polygon line*/
 
     if(PolygonOn == 1){
 
-        /* getting postions and updating/storing the coordinates into the vector */
-        xyPress.push_back(event->pos());
+        xyPress.push_back(event->pos()); /* getting postions and updating/storing the coordinates into the vector */
 
-        /* after second point is clicked */
-        if(xyPress.size() > 1)
+        if(xyPress.size() > 1) /* after second point is clicked */
         {
-            /* drawline */
-            emit drawLines(xyPress.back(), xyPress.at(xyPress.size()-2));
-
+            emit drawLines(xyPress.back(), xyPress.at(xyPress.size()-2)); /* draw lines */
             polygonSide++;
-
         }
     }
 }
 
-void pixelmap::clearVectors(){
+void pixelmap::clearVectors(){ /*clear Vector*/
 
+    /*preparing for new polygon*/
     xyPress.clear();
     lineV.clear();
     polygonSide = 1;
 }
 
 
-/* end drawing */
-void pixelmap::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* ){
+
+void pixelmap::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* ){ /* end drawing */
 
     if(PolygonOn == 1){
-        /* draws line from first and last point */
-        emit drawLines(xyPress.back(), xyPress.at(xyPress.size()-2));
+        emit drawLines(xyPress.back(), xyPress.at(xyPress.size()-2)); /* draws line from first and last point */
 
-        cout << polygonSide << endl;
+        QPolygonF newPoly(xyPress); /* Storing all Polygon point */
 
-        QPolygonF newPoly(xyPress);
+        emit drawPolygon(newPoly); /* Drawing  Polygon*/
 
-        emit drawPolygon(newPoly);
-
-
-        clearVectors();
+        clearVectors(); /*wipe all coord*/
     }
 }
 

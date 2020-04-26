@@ -3,106 +3,83 @@
 
 using namespace std;
 
-polygonDraw::polygonDraw(QPolygonF polygon, QObject *parent):QGraphicsPolygonItem(polygon)
+polygonDraw::polygonDraw(QPolygonF polygon, QObject *parent):QGraphicsPolygonItem(polygon) /*when rightclicking on a Polygon a contextMenu show*/
 {
-    //QWidget *widget = new QWidget;
+    setFlag(QGraphicsItem::ItemIsMovable); /*Polygon is movable*/
 
+    contextMenu.addAction("Copy", this, SLOT(copyPolygon())); /*adding contextMenu */
+    connect(this, SIGNAL(dulicatePoly(QPolygonF)), parent, SLOT(drawPolygon(QPolygonF))); /*connecting contextMenu to the Application*/
 
-    setFlag(QGraphicsItem::ItemIsMovable);
+    contextMenu.addAction("Delete", this, SLOT(deletePolygon())); /*adding contextMenu */
+    connect(this, SIGNAL(removePolygon(polygonDraw *)), parent , SLOT(removePolygon(polygonDraw *))); /*connecting contextMenu to the Application*/
 
-    contextMenu.addAction("Copy", this, SLOT(copyPolygon()));
-    connect(this, SIGNAL(dulicatePoly(QPolygonF)), parent, SLOT(drawPolygon(QPolygonF)));
-
-    contextMenu.addAction("Delete", this, SLOT(deletePolygon()));
-    connect(this, SIGNAL(removePolygon(polygonDraw *)), parent , SLOT(removePolygon(polygonDraw *)));
-
-    contextMenu.addAction("Add Class Tag", this, SLOT(addClassTag()));
-    connect(this, SIGNAL(updateClassName(QGraphicsTextItem *)), parent , SLOT(updateClassName(QGraphicsTextItem *)));
+    contextMenu.addAction("Add Class Tag", this, SLOT(addClassTag())); /*adding contextMenu */
+    connect(this, SIGNAL(updateClassName(QGraphicsTextItem *)), parent , SLOT(updateClassName(QGraphicsTextItem *))); /*connecting contextMenu to the Application*/
 }
 
-void polygonDraw:: updateClassValue(QGraphicsTextItem *){
-
-
-    //ClassName = new QGraphicsTextItem(mMain->getAnnotationName());
-    ClassName = new QGraphicsTextItem("Class Name");
-
-}
-
-QGraphicsTextItem *polygonDraw::retrieveClassName()
+QGraphicsTextItem *polygonDraw::retrieveClassName() /*setup annotation*/
 {
-    updateClassValue(ClassName);
+    ClassName = new QGraphicsTextItem("",this); /*initialising annotation tag */
     return ClassName;
 }
 
 
-
 void polygonDraw::getPolygonPos()
 {
-    //stores the selected Polygon
-    newPoly = this->polygon();
+    newPoly = this->polygon(); /*stores the selected Polygon*/
 
-    QPointF PolyPoint(0,0);
+    QPointF PolyPoint(0,0); /*initialising new Polygon*/
 
-    for(int i = 0; i<newPoly.size(); i++){
+    for(int i = 0; i<newPoly.size(); i++){ /*for each point */
 
-        //compares the Polygons to find the Postion
-        if(PolyPoint.x() < newPoly.at(i).x() && PolyPoint.y() < newPoly.at(i).y())
+        if(PolyPoint.x() < newPoly.at(i).x() && PolyPoint.y() < newPoly.at(i).y()) /*compares the Polygons to find lowest Postion*/
         {
-            //set new Position
-            PolyPoint.setX(newPoly.at(i).x());
-            PolyPoint.setY(newPoly.at(i).y());
+            PolyPoint.setX(newPoly.at(i).x()); /*find and set X Position*/
+            PolyPoint.setY(newPoly.at(i).y()); /*find and set Y Position*/
         }
-
     }
-    //update Position
-    this->ClassName->setPos(PolyPoint);
-
+    this->ClassName->setPos(PolyPoint);  /*Set QGraphicsTextItem new postion*/
 }
 
 
-void polygonDraw::mousePressEvent(QGraphicsSceneMouseEvent *event)
+void polygonDraw::mousePressEvent(QGraphicsSceneMouseEvent *event) /*display context Menu*/
 {
-    if(event->button() & Qt::RightButton)
+    if(event->button() & Qt::RightButton) /*checks if user right clicks over a Shape*/
     {
-        contextMenu.exec(event->screenPos());
-
+        contextMenu.exec(event->screenPos()); /*display contextMenu on QGraphicsScene*/
     }
 }
 
 
-void polygonDraw::deletePolygon()
+void polygonDraw::deletePolygon() /*Remove Selected Shape*/
 {
-    emit removePolygon(this);
-    delete ClassName;
+    emit removePolygon(this); /*passes the polygon the user wishes to remove from the QGraphicsScene*/
+    delete ClassName; /*deletes the annotation under the selected Polygon*/
 }
 
-void polygonDraw::addClassTag()
+void polygonDraw::addClassTag() /*looks for postion and name of annotation*/
 {
-    retrieveClassName();
-    getPolygonPos();
-    emit updateClassName(ClassName);
+    retrieveClassName(); /*get annotation name*/
+    getPolygonPos(); /*get slected Polygon postion*/
+    emit updateClassName(ClassName); /*update and displays annotation tag*/
 }
 
-void polygonDraw::copyPolygon()
+void polygonDraw::copyPolygon() /*Copy Polygon*/
 {
-
-    QVector<QPointF> newPolyPoints;
-    QPointF P;
-    QPolygonF copyPoly = mapToScene(polygon());
+    QPolygonF copyPoly = mapToScene(polygon()); /*Makes a copy polygon and returns polygon coordinate point mapped to scene coordinates */
 
     for(int i = 0; i < copyPoly.size(); i++)
     {
-        P = copyPoly.at(i);
+        P = copyPoly.at(i); /*Get a point from original Polygon and load into copyPoly*/
 
-        P.setX(P.x() + 50);
-        P.setY(P.y() + 50);
+        P.setX(P.x() + 50); /*sets new polygon Coordinate and add 50 (Prevents Polygon from stacking over eachother)*/
+        P.setY(P.y() + 50); /*sets new polygon Coordinate and add 50 (Prevents Polygon from stacking over eachother)*/
 
-        newPolyPoints.push_back(P);
+        newPolyPoints.push_back(P); /*Adds copy Polygon Coordinate into the QVector*/
     }
 
-    QPolygonF movedPoly(newPolyPoints);
-
-    emit dulicatePoly(movedPoly);
+    QPolygonF movedPoly(newPolyPoints); /*loads copy Polygon Coordinate into a QPointF to pass through before drawing*/
+    emit dulicatePoly(movedPoly); /*Draws copy polygon*/
 }
 
 

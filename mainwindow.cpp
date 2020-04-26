@@ -2,23 +2,6 @@
 #include "ui_mainwindow.h"
 #include "polygonDraw.h"
 #include "linkedlist.h"
-#include <iostream>
-#include <QGraphicsLineItem>
-#include <QDebug>
-#include <QMessageBox>
-#include <QFile>
-#include <QTextStream>
-#include <QString>
-#include <QLabel>
-#include <QVector>
-#include <QInputDialog>
-#include <QLineEdit>
-#include <QJsonObject>
-#include <QJsonDocument>
-#include <QJsonArray>
-
-
-using namespace std;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -27,10 +10,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setWindowTitle("Annotation Tool");
-    pmap=new pixelmap(this);
-    //image = new QGraphicsPixmapItem();
-    scene = new QGraphicsScene(this);
-    ui -> graphicsView -> setScene(scene);
+    pmap=new pixelmap(this); /*initialising pixelmap*/
+    scene = new QGraphicsScene(this); /*initialising QGraphicsScene*/
+    ui -> graphicsView -> setScene(scene); /*initialising graphicsView (canvas)*/
 
 }
 
@@ -39,134 +21,121 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-/* Drawing Lines */
-void MainWindow:: drawLines(const QPointF &firstP , const QPointF &secondP)
+void MainWindow:: drawLines(const QPointF &firstP , const QPointF &secondP) /* Drawing temporary Lines */
 {
-    QGraphicsLineItem *lines = scene -> addLine(firstP.x(), firstP.y(), secondP.x(), secondP.y(), pen);
+    QGraphicsLineItem *lines = scene -> addLine(firstP.x(), firstP.y(), secondP.x(), secondP.y(), pen); /*draws line on QGraphicsScene*/
 
-    pmap -> lineV.push_back(lines);
+    pmap -> lineV.push_back(lines); /*updates pixelmap and stores coordinates in QVector QGraphicsLineItem*/
 }
 
-/* Drawing Polygons */
-void MainWindow:: drawPolygon(const QPolygonF &polygon)
+void MainWindow:: drawPolygon(const QPolygonF &polygon) /* Drawing Polygons */
 {
 
-    pointer = new polygonDraw(polygon, this);
+    pointer = new polygonDraw(polygon, this); /*initialising new polygon with coordinates given (polygon)*/
 
-    pointer -> setPen(pen);
+    pointer -> setPen(pen); /*drawing polygon outlines by setting the pen*/
 
-    scene -> addItem(pointer);
+    scene -> addItem(pointer); /*add drawn polygon to QGraphicsScene (canvas)*/
 
     for (const QGraphicsLineItem* line: pmap -> lineV)
     {
-        delete line;
+        delete line; /*after drawing polygon remove the temporary lines drawn before*/
     }
 
-    shapes.append(polygon);
+    savePolygon.append(polygon); /*coordinates of the polygon are passed for save to a file*/
 }
 
-/* Remove polygon */
-void MainWindow::removePolygon(polygonDraw *Dpoly)
+void MainWindow::removePolygon(polygonDraw *Dpoly) /* Remove polygon */
 {
-    scene->removeItem(Dpoly);
+    scene->removeItem(Dpoly); /*removes the seleted polygon from QGraphicsScene*/
 }
 
-/* Update class name */
-void MainWindow::updateClassName(QGraphicsTextItem *CName)
+void MainWindow::updateClassName(QGraphicsTextItem *CName) /* Update class name */
 {
-    cout << "ClassName:" << CName <<endl;
-    scene->addItem(CName);
+    CName->setPlainText(annotationName); /*loads selected annotation name onto QGraphicsTextItem*/
+    scene->addItem(CName); /*Add QGraphicsTextItem (Class Name) to QGraphicsScene under Polygon*/
 }
 
-/* Drawing with Polygon shape */
-void MainWindow::on_polyShape_clicked()
+
+void MainWindow::on_polyShape_clicked() /* Drawing with Polygon shape */
 {
-    pmap -> PolygonOn = 1;
+    pmap -> PolygonOn = 1; /*initialising Polygon when radio button is clicked */
 }
 
-/* Load image button is clicked */
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_pushButton_clicked() /* Load image */
 {
-    // browse dialog box to locate images folder, then load folder contents to QDir class
-    QDir directory(QFileDialog::getExistingDirectory(this, "Open a Folder", QDir::homePath()));
+    QDir directory(QFileDialog::getExistingDirectory(this, "Open a Folder", QDir::homePath())); /*browse dialog box to locate folder of images, then load folder contents to QDir class*/
 
-    // only load filenames with acceptable image postfixes
-    QStringList images = directory.entryList(QStringList() << "*.jpg" << "*.png" << "*.jpeg", QDir::Files);
+    QStringList images = directory.entryList(QStringList() << "*.jpg" << "*.png" << "*.jpeg", QDir::Files); /*only load filenames with acceptable filters*/
 
-    // populate listbox with acceptable files
-    if (images.length() > 0) {
-        // store path for later
-        currentFolder = directory.path();
-        qInfo() << currentFolder << endl;
-        foreach(QString image, images) {
-            //loads image names to image name pane
-            ui -> WidgetImgList -> addItem(image);
-            //loads image names into Link List
-            lList->loadList(image);
+    if(images.isEmpty()) /*if user doesnt pick a file the problem will return prevents crashing */
+        return;
+
+    else if (images.length() > 0) { /*populate WidgetImgList (QWidgetLsit) with accepted files*/
+        FolderPath = directory.path(); /*store file path*/
+        foreach(QString image, images) { /*reading through the file*/
+            ui -> WidgetImgList -> addItem(image); /*loads just the image names to image name pane (QWidgetLsit)*/
+            lList->loadList(image);   /*loads image names into Link List*/
         }
     }
-    lList->print();
+//    lList->print(); display wants inside the link list
 }
 
 
 
-void MainWindow::on_WidgetImgList_currentItemChanged(QListWidgetItem *current)
+void MainWindow::on_WidgetImgList_currentItemChanged(QListWidgetItem *current) /*load selected image*/
 {
-
-    // store filename ready for opening
-    currentFile = current->text();
-    fileName = currentFolder + '/' + currentFile;
-    std::cout << fileName.toUtf8().constData() << std::endl;
-    loadImage(fileName);
-
+    imageName = current->text();  /*gets selected image name i.e cat.png*/
+    fileName = FolderPath + '/' + imageName; /*stitching file path and file name together*/
+    loadImage(fileName); /*calls loadimage function and pass QString of selected image file path*/
 }
 
-void MainWindow::on_loadClass_clicked()
+void MainWindow::on_loadClass_clicked() /*loads class*/
 {
-    ui->classList->clear();
-    classFile = QFileDialog::getOpenFileName(this, tr("Open Class File"), "", "Class file (*.names)");
-    if(classFile.isEmpty())
+    ui->classList->clear(); /*clears classList (QWidgetList) before loading classes prevents errors*/
+    classFile = QFileDialog::getOpenFileName(this, tr("Open Class File"), "", "Class file (*.names)"); /*open file dialog and only looks for *.names files*/
+
+    if(classFile.isEmpty()) /*if user doesnt pick a file the problem will return prevents crashing */
         return;
-    else{
-        QFile classNameFile(classFile);
-            if(!classNameFile.open(QIODevice::ReadOnly)){
-            QMessageBox::information(this, "Can not to open file", classNameFile.errorString());
+
+    else{ QFile classNameFile(classFile); /*load class data into Qfile*/
+            if(!classNameFile.open(QIODevice::ReadOnly)){ /*reads class file */
+            QMessageBox::information(this, "Can not to Class file", classNameFile.errorString()); /*display "can not to open class file" to user if file isnt a *.names file*/
                 return;
         }
-        QTextStream in(&classNameFile);
-        ui->classList->clear();
-        while (!in.atEnd()){
-            QString line = in.readLine();
 
-            ui->classList->addItem(line);
+        QTextStream in(&classNameFile); /*reads file */
+        ui->classList->clear(); /*clears classList (QWidgetList) before loading classes prevents errors*/
+        while (!in.atEnd()){ /*read the whole file*/
+            QString line = in.readLine(); /*loads each line into QString*/
+            ui->classList->addItem(line); /*updates QwidgetList adding class name to class pane*/
 
         }
-        classNameFile.close();
+        classNameFile.close(); /*close file */
     }
 }
 
-void MainWindow::on_addClass_clicked()
+void MainWindow::on_addClass_clicked() /*Add New Class*/
 {
-    QString className;
-    className = ui->addClassText->text();
-    ui->classList->addItem(className);
+    QString className; /*initialising new class Name*/
+    className = ui->addClassText->text(); /*Gets String inside QLineEdit (addClassText)*/
+    ui->classList->addItem(className); /*Add to the QWidgetList*/
 }
 
-void MainWindow::loadImage(QString fileName)
+void MainWindow::loadImage(QString fileName) /*load image when selected*/
 {
     QImage image;
-    if(image.load(fileName)){
-        scene = new QGraphicsScene;
-        pmap->setPixmap(QPixmap::fromImage(image));
-        scene->addItem(pmap);
-        ui->graphicsView->setScene(scene);
+    if(image.load(fileName)){/* check if filename is true*/
+        scene = new QGraphicsScene; /*initialising new QGraphicsScene*/
+        pmap->setPixmap(QPixmap::fromImage(image)); /*initialising new QPixmap and loads slected image from path*/
+        scene->addItem(pmap); /* loads new image QGraphicsScene*/
+        ui->graphicsView->setScene(scene); /* loads new image for the user to see*/
     }
 }
 
-void MainWindow::on_deleteClass_clicked()
+void MainWindow::on_deleteClass_clicked() /*Delete selected Class*/
 {
-    delete ui->classList->currentItem();
+    delete ui->classList->currentItem(); /*removes slected class from Class pane (classList)*/
 }
 
 void MainWindow::on_saveClass_clicked()
@@ -189,31 +158,29 @@ void MainWindow::on_saveClass_clicked()
 
 void MainWindow::searchN(QString SearchN)
 {
-    Switch = lList->loadSearch(SearchN);
+    Switch = lList->loadSearch(SearchN); /*passing image search name to search algorithm to try and find*/
 
     if (Switch == 1)
     {
-        ui->searchLineEdit->setText("Found");
+        ui->searchLineEdit->setText("Image Exist"); /*if image found display this */
     }
     else if (Switch == 0)
     {
-       ui->searchLineEdit->setText("Not Found");
+       ui->searchLineEdit->setText("Image Dont Exist");  /*if image NOT found display this */
     }
 }
 
 
 void MainWindow::getSearchName()
 {
-    QString Q = ui->searchLineEdit->text();
+    QString Q = ui->searchLineEdit->text();  /*Gets String inside QLineEdit (searchLineEdit)*/
     searchN(Q);
-    std::cout << Q.toUtf8().constData() << std::endl;
-
 }
 
 
 void MainWindow::on_searchButton_clicked()
 {
-    getSearchName();
+    getSearchName(); /*initialise search*/
 }
 
 //Sorting functions
@@ -222,11 +189,9 @@ QStringList sorting (QListWidget* fileList,int sort){
     QStringList images;
     int size = fileList->count();
 
-    qDebug() << "size of image list "<< size;
-
     QString temp;
     int j;
-//places current files into a list
+    //places current files into a list
     for (int k=0;k<size;k++){
         images.append(fileList->item(k)->text());
     }
@@ -310,55 +275,34 @@ void MainWindow::on_classSortDesc_clicked()
 
 void MainWindow::on_pushButton_5_clicked()
 {
-    int numOfPoints=0;
-     QJsonArray shapeJsonArray;
-     QJsonObject shapeJsonObject;
-     QJsonArray coodJsonArray;
-     QJsonObject pointJsonObject;
-     QJsonObject coorJsonObject;
 
+     QString textFileName= QFileDialog::getSaveFileName(this,tr("Save Annotation File"),".",tr("*.json"));  /*open file dialog with *.json format to save in*/
+     QFile jsonFile(textFileName);  /*load json file (textFileName) to QFile */
+     jsonFile.open(QFile::WriteOnly); /* The json file is open for writing */
 
-     QJsonObject object;
-     QString intialPath = QDir::currentPath() + "/untitled.json";
-     QString textFileName = QFileDialog::getSaveFileName(this, tr("Save as"), intialPath);
-     QFile jsonFile(textFileName);
-     jsonFile.open(QFile::WriteOnly);
-     object.insert("Image-path", fileName);
-     QString shapeType= "polygon";
-     object.insert("Shape type", shapeType);
-     for(int i=0;i<shapes.size();i++)
+     object.insert("IMAGE PATH", fileName); /*Insert Json title pass image path*/
+
+     for(int i=0;i<savePolygon.size();i++) /*Nested For loop to find Polygon point*/
      {
-         numOfPoints=shapes[i].count();
+         Sides=savePolygon[i].count(); /*Find how many sides a Polygon has*/
 
-         for(int j=0;j<numOfPoints;j++)
+         for(int j=0;j<Sides;j++)
          {
-             pointJsonObject.insert("x",shapes[i][j].x());
-             pointJsonObject.insert("y",shapes[i][j].y());
-             coodJsonArray.append(pointJsonObject);
+             coordObject.insert("X Axis",savePolygon[i][j].x()); /*load X Axis polygon point into JSON file*/
+             coordObject.insert("Y Axis",savePolygon[i][j].y()); /*load Y Axis polygon point into JSON file*/
+             coordArray.append(coordObject); /*Inserts coord at the end of the array*/
          }
-         coorJsonObject.insert("coordinates",coodJsonArray);
-         for(int j=0;j<numOfPoints;j++)
-         {
-             coodJsonArray.removeFirst();
-         }
-         shapeJsonObject.insert("annotation",0);//to do assign annotation when annotation linked to shape
-         shapeJsonArray.append(shapeJsonObject);
-         shapeJsonArray.append(coorJsonObject);
+         object.insert("COORD",coordArray); /*Inserts coord into the JSON array.*/
+
      }
-     object.insert("shapes",shapeJsonArray);
-     QJsonDocument jsonDoc(object);
-     jsonFile.write(jsonDoc.toJson());
-     jsonFile.close();
+
+     QJsonDocument jsonSave(object); /*initialising write to JSON file*/
+     jsonFile.write(jsonSave.toJson()); /*writing to JSON file*/
+     jsonFile.close(); /*closing the JSON file*/
 }
 
-//void MainWindow::on_classList_currentItemChanged(QListWidgetItem *current)
-//{
-//    annotationName = current->text();
-//    std::cout << annotationName.toUtf8().constData() << std::endl;
-//}
-
-void MainWindow::on_classList_currentTextChanged(const QString &currentText)
+void MainWindow::on_classList_currentTextChanged(const QString &currentText) /*set annotation name*/
 {
-    annotationName = currentText;
-    std::cout << annotationName.toUtf8().constData() << std::endl;
+    annotationName = currentText; /*gets selected class name i.e cat and store for annotation */
+    return;
 }
